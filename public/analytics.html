@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodShare India - Food Waste Statistics</title>
+    <link rel="stylesheet" href="page.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --secondary: #f59e0b;
+            --dark-bg: #030712;
+            --darker-bg: #000000;
+            --card-bg: #111827;
+            --border-color: #1f2937;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: #f9fafb;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-card {
+            background-color: var(--card-bg);
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .card-animate {
+            transition: all 0.3s ease;
+        }
+        
+        .card-animate:hover {
+            transform: scale(1.03);
+        }
+        
+        .custom-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .region-hover:hover {
+            cursor: pointer;
+            filter: brightness(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-black py-5 px-6 shadow-xl sticky top-0 z-50 border-b border-gray-800">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-utensils text-emerald-500 text-2xl"></i>
+                <span class="text-xl font-bold gradient-text">FoodShare India</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="/page.html" class="nav-link text-gray-400 hover:text-white text-sm uppercase tracking-wider font-medium">Home</a>
+                <a href="#" class="nav-link text-gray-400 hover:text-white text-sm uppercase tracking-wider font-medium">About Us</a>
+                <a href="#" class="nav-link text-white font-semibold text-sm uppercase tracking-wider">Analytics</a>
+                <a href="#" class="nav-link text-gray-400 hover:text-white text-sm uppercase tracking-wider font-medium">Donate</a>
+                <a href="#" class="nav-link text-gray-400 hover:text-white text-sm uppercase tracking-wider font-medium">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <i class="fas fa-bars text-white text-xl"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-b from-black to-gray-950 py-20">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6">Food Waste <span class="gradient-text">Statistics</span></h1>
+                    <p class="text-gray-300 text-lg mb-8 leading-relaxed">Analyzing the critical impact of food waste across India and visualizing data to drive meaningful change.</p>
+                    <div class="flex space-x-4">
+                        <button class="bg-emerald-600 hover:bg-emerald-700 px-8 py-4 rounded-md text-white font-medium shadow-xl transition duration-300 focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50">
+                            Explore Data
+                        </button>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <!-- Added missing image -->
+                    <img src="https://images.unsplash.com/photo-1542223616-740d5dff7f56?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=400&q=80" alt="Food waste statistics visualization" class="rounded-lg shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Statistics -->
+    <section class="py-16 bg-black">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-12 text-center">National Food Waste <span class="gradient-text">Overview</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="stat-card p-6 rounded-lg shadow-xl bg-gradient-to-br from-gray-900 to-gray-950 border border-gray-800">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold">Annual Food Waste</h3>
+                        <i class="fas fa-trash-alt text-2xl text-red-500"></i>
+                    </div>
+                    <p class="text-4xl font-bold mb-2">68.8 <span class="text-2xl">Million</span></p>
+                    <p class="text-gray-300">Tonnes of food wasted annually in India</p>
+                </div>
+                
+                <div class="stat-card p-6 rounded-lg shadow-xl bg-gradient-to-br from-gray-900 to-gray-950 border border-gray-800">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold">Household Waste</h3>
+                        <i class="fas fa-home text-2xl text-blue-500"></i>
+                    </div>
+                    <p class="text-4xl font-bold mb-2">40<span class="text-2xl">%</span></p>
+                    <p class="text-gray-300">Of total food waste comes from households</p>
+                </div>
+                
+                <div class="stat-card p-6 rounded-lg shadow-xl bg-gradient-to-br from-gray-900 to-gray-950 border border-gray-800">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold">Economic Value</h3>
+                        <i class="fas fa-rupee-sign text-2xl text-yellow-500"></i>
+                    </div>
+                    <p class="text-4xl font-bold mb-2">₹92,000<span class="text-2xl">Cr</span></p>
+                    <p class="text-gray-300">Economic value of food wasted annually</p>
+                </div>
+                
+                <div class="stat-card p-6 rounded-lg shadow-xl bg-gradient-to-br from-gray-900 to-gray-950 border border-gray-800">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold">Hunger Stats</h3>
+                        <i class="fas fa-utensils text-2xl text-green-500"></i>
+                    </div>
+                    <p class="text-4xl font-bold mb-2">189<span class="text-2xl">Million</span></p>
+                    <p class="text-gray-300">People in India are undernourished</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- City-specific Data -->
+    <section class="py-16 bg-gray-950">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-12 text-center">City-specific <span class="gradient-text">Statistics</span></h2>
+            
+            <div class="overflow-x-auto rounded-lg border border-gray-800 shadow-2xl">
+                <table class="min-w-full bg-gray-900 rounded-lg overflow-hidden">
+                    <thead>
+                        <tr class="bg-black">
+                            <th class="px-6 py-4 border-b border-gray-800 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">City</th>
+                            <th class="px-6 py-4 border-b border-gray-800 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Daily Food Waste (Tonnes)</th>
+                            <th class="px-6 py-4 border-b border-gray-800 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">% of Total Waste</th>
+                            <th class="px-6 py-4 border-b border-gray-800 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Potential Meals Lost</th>
+                            <th class="px-6 py-4 border-b border-gray-800 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-800">
+                        <tr class="hover:bg-gray-700 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap">Mumbai</td>
+                            <td class="px-6 py-4 whitespace-nowrap">2,400</td>
+                            <td class="px-6 py-4 whitespace-nowrap">43%</td>
+                            <td class="px-6 py-4 whitespace-nowrap">5.8 Million</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-red-900 text-red-300">Critical</span></td>
+                        </tr>
+                        <tr class="hover:bg-gray-700 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap">Delhi</td>
+                            <td class="px-6 py-4 whitespace-nowrap">2,100</td>
+                            <td class="px-6 py-4 whitespace-nowrap">41%</td>
+                            <td class="px-6 py-4 whitespace-nowrap">5.1 Million</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-red-900 text-red-300">Critical</span></td>
+                        </tr>
+                        <tr class="hover:bg-gray-700 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap">Bengaluru</td>
+                            <td class="px-6 py-4 whitespace-nowrap">1,800</td>
+                            <td class="px-6 py-4 whitespace-nowrap">39%</td>
+                            <td class="px-6 py-4 whitespace-nowrap">4.3 Million</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-orange-900 text-orange-300">High</span></td>
+                        </tr>
+                        <tr class="hover:bg-gray-700 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap">Chennai</td>
+                            <td class="px-6 py-4 whitespace-nowrap">1,500</td>
+                            <td class="px-6 py-4 whitespace-nowrap">38%</td>
+                            <td class="px-6 py-4 whitespace-nowrap">3.6 Million</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-orange-900 text-orange-300">High</span></td>
+                        </tr>
+                        <tr class="hover:bg-gray-700 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap">Kolkata</td>
+                            <td class="px-6 py-4 whitespace-nowrap">1,300</td>
+                            <td class="px-6 py-4 whitespace-nowrap">35%</td>
+                            <td class="px-6 py-4 whitespace-nowrap">3.1 Million</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-yellow-900 text-yellow-300">Moderate</span></td>
+                        </tr>
+                        <tr class="hover:bg-gray-700 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap">Hyderabad</td>
+                            <td class="px-6 py-4 whitespace-nowrap">1,200</td>
+                            <td class="px-6 py-4 whitespace-nowrap">33%</td>
+                            <td class="px-6 py-4 whitespace-nowrap">2.9 Million</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-yellow-900 text-yellow-300">Moderate</span></td>
+                        </tr>
+                        <tr class="hover:bg-gray-700 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap">Ahmedabad</td>
+                            <td class="px-6 py-4 whitespace-nowrap">950</td>
+                            <td class="px-6 py-4 whitespace-nowrap">31%</td>
+                            <td class="px-6 py-4 whitespace-nowrap">2.3 Million</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-green-900 text-green-300">Manageable</span></td>
+                        </tr>
+                        <tr class="hover:bg-gray-700 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap">Pune</td>
+                            <td class="px-6 py-4 whitespace-nowrap">920</td>
+                            <td class="px-6 py-4 whitespace-nowrap">30%</td>
+                            <td class="px-6 py-4 whitespace-nowrap">2.2 Million</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 py-1 text-xs rounded-full bg-green-900 text-green-300">Manageable</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section class="py-16 bg-black">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-12 text-center">The <span class="gradient-text">Impact</span> of Food Waste</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gradient-to-b from-gray-900 to-gray-950 p-6 rounded-lg shadow-xl card-animate border border-gray-800">
+                    <div class="mb-4 text-center">
+                        <img src="https://images.unsplash.com/photo-1543966888-7c1dc482a810?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80" alt="Environmental Impact" class="rounded-lg mx-auto" style="height: 150px; object-fit: cover;">
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-center">Environmental Impact</h3>
+                    <ul class="space-y-3 text-gray-200">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1 mr-2"></i>
+                            <span>Food waste contributes to 18% of India's methane emissions</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1 mr-2"></i>
+                            <span>95 billion cubic meters of water wasted annually</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1 mr-2"></i>
+                            <span>73 million tonnes of CO2 equivalent generated</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gradient-to-b from-gray-900 to-gray-950 p-6 rounded-lg shadow-xl card-animate border border-gray-800">
+                    <div class="mb-4 text-center">
+                        <img src="https://images.unsplash.com/photo-1541802645635-11f2286a7482?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80" alt="Social Impact" class="rounded-lg mx-auto" style="height: 150px; object-fit: cover;">
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-center">Social Impact</h3>
+                    <ul class="space-y-3 text-gray-200">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1 mr-2"></i>
+                            <span>14% of India's population is undernourished</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1 mr-2"></i>
+                            <span>35.5% of children under 5 are underweight</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1 mr-2"></i>
+                            <span>Could feed 73% of India's hungry population</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gradient-to-b from-gray-900 to-gray-950 p-6 rounded-lg shadow-xl card-animate border border-gray-800">
+                    <div class="mb-4 text-center">
+                        <img src="https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80" alt="Economic Impact" class="rounded-lg mx-auto" style="height: 150px; object-fit: cover;">
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-center">Economic Impact</h3>
+                    <ul class="space-y-3 text-gray-200">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1 mr-2"></i>
+                            <span>₹92,000 crores of economic value lost annually</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1 mr-2"></i>
+                            <span>40% of fruits & vegetables wasted before reaching market</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1 mr-2"></i>
+                            <span>Significant loss in farmer income & consumer spending</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-gradient-to-b from-gray-950 to-black">
+        <div class="container mx-auto px-6">
+            <div class="bg-gradient-to-r from-emerald-900 to-emerald-800 p-10 rounded-xl shadow-2xl">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="mb-6 md:mb-0 md:w-2/3">
+                        <h2 class="text-3xl font-bold mb-4">Join Us in Reducing Food Waste</h2>
+                        <p class="text-gray-100">Help us create a sustainable future by joining our mission to reduce food waste across India.</p>
+                    </div>
+                    <div>
+                        <button class="bg-white text-emerald-700 px-8 py-3 rounded-md font-semibold shadow-lg hover:bg-gray-100 transition duration-300 transform hover:-translate-y-1">
+                            Get Involved
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 pt-16 pb-8 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">FoodShare India</h3>
+                    <p class="text-gray-400 mb-4">Dedicated to reducing food waste and helping those in need across India.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="/page.html" class="hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Donate</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                            <span>123 Food Street, New Delhi, India</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-2"></i>
+                            <span>+91 98765 43210</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-2"></i>
+                            <span>info@foodshareindia.org</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter for the latest updates.</p>
+                    <form>
+                        <div class="flex">
+                            <input type="email" placeholder="Your email" class="bg-gray-800 text-white px-4 py-2 rounded-l-md w-full focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-r-md hover:bg-green-600 transition duration-300">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 FoodShare India. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

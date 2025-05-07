@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Track Your Donation - FoodLink</title>
+  <link rel="stylesheet" href="/page.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4CAF50;
+      --primary-dark: #388E3C;
+      --accent: #8BC34A;
+      --dark: #111;
+      --darker: #000;
+      --light: #fff;
+      --gray: #aaa;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background: var(--darker);
+      color: var(--light);
+      line-height: 1.6;
+    }
+    
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 5%;
+      background: rgba(17, 17, 17, 0.95);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    nav .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    
+    nav .logo::before {
+      content: "";
+      display: inline-block;
+      height: 30px;
+      width: 30px;
+      background-color: var(--primary);
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+    
+    nav .menu {
+      display: flex;
+      gap: 30px;
+    }
+    
+    nav .menu a {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      position: relative;
+      transition: var(--transition);
+    }
+    
+    nav .menu a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      background: var(--primary);
+      left: 0;
+      bottom: -5px;
+      transition: var(--transition);
+    }
+    
+    nav .menu a:hover {
+      color: var(--primary);
+    }
+    
+    nav .menu a:hover::after {
+      width: 100%;
+    }
+    
+    .tracking-container {
+      max-width: 800px;
+      margin: 120px auto 50px;
+      padding: 40px;
+      background: var(--dark);
+      border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .tracking-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .tracking-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 15px;
+      color: var(--light);
+    }
+    
+    .tracking-header h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--primary);
+    }
+    
+    .tracking-header p {
+      color: var(--gray);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .track-form {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .track-form:focus-within {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+      border-color: rgba(76, 175, 80, 0.2);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      color: var(--light);
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .track-button {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      letter-spacing: 0.5px;
+    }
+    
+    .track-button i {
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+    
+    .track-button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    #trackingResults {
+      display: none;
+    }
+    
+    .donation-details {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .donation-details h2 {
+      margin-bottom: 25px;
+      color: var(--primary);
+      font-size: 1.6rem;
+      position: relative;
+      padding-bottom: 12px;
+    }
+    
+    .donation-details h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--primary);
+    }
+    
+    .tracking-id {
+      display: inline-block;
+      background: rgba(76, 175, 80, 0.1);
+      padding: 8px 15px;
+      border-radius: 30px;
+      color: var(--primary);
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-top: 10px;
+      font-size: 1.1rem;
+      border: 1px solid rgba(76, 175, 80, 0.2);
+    }
+    
+    .timeline-item {
+      position: relative;
+      padding-bottom: 30px;
+      animation: fadeInUp 0.6s ease forwards;
+      opacity: 0;
+    }
+    
+    .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+    .timeline-item:nth-child(2) { animation-delay: 0.3s; }
+    .timeline-item:nth-child(3) { animation-delay: 0.5s; }
+    .timeline-item:nth-child(4) { animation-delay: 0.7s; }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .timeline-icon {
+      position: absolute;
+      left: -50px;
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--light);
+      z-index: 2;
+      box-shadow: 0 0 0 5px rgba(76, 175, 80, 0.2);
+    }
+    
+    .timeline-content {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 20px;
+      margin-left: 20px;
+      transition: all 0.3s ease;
+      border-left: 3px solid var(--primary);
+    }
+    
+    .timeline-content:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 20px;
+      display: none;
+    }
+    
+    .loading i {
+      font-size: 2rem;
+      color: var(--primary);
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .error-message {
+      background: rgba(220, 53, 69, 0.1);
+      color: #dc3545;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      border-left: 3px solid #dc3545;
+      display: none;
+    }
+    
+    .error-message i {
+      margin-right: 10px;
+    }
+    
+    .tracking-actions {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    
+    .btn {
+      padding: 12px 25px;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+    
+    .btn i {
+      margin-right: 8px;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: var(--light);
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* User dropdown menu */
+    .user-menu-container {
+      position: relative;
+      display: none;
+    }
+    
+    .user-menu-button {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    
+    .user-menu-button:after {
+      content: '\f107';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      margin-left: 5px;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: var(--dark);
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1001;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    
+    .dropdown-content a {
+      color: var(--light);
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.3s;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .show {
+      display: block;
+    }
+    
+    .completed-step .step-icon {
+      background: var(--primary);
+      color: var(--light);
+    }
+    
+    .current-step .step-icon {
+      background: var(--primary);
+      color: var(--light);
+      box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3);
+    }
+    
+    .pending-step .step-icon {
+      background: var(--dark);
+      color: var(--gray);
+      border-color: var(--gray);
+    }
+    
+    .pending-step .step-content {
+      border-left-color: var(--gray);
+      opacity: 0.7;
+    }
+    
+    .pending-step .step-status {
+      color: var(--gray);
+    }
+    
+    @media (max-width: 768px) {
+      .tracking-container {
+        margin: 100px 20px 50px;
+        padding: 30px 20px;
+      }
+      
+      .tracking-timeline {
+        padding-left: 30px;
+      }
+      
+      .step-icon {
+        left: -30px;
+        width: 25px;
+        height: 25px;
+        font-size: 0.8rem;
+      }
+      
+      .step-details {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .tracking-actions {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      nav .menu a {
+        display: none;
+      }
+      
+      nav .menu a.highlight {
+        display: inline-block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="page.html" class="logo">FoodLink</a>
+    <div class="menu">
+      <a href="page.html#about">About</a>
+      <a href="page.html#contacts">Contact</a>
+      <a href="page.html#report">Report</a>
+      <a href="signup.html" id="signupLink">Sign Up</a>
+      <a href="index.html" id="loginLink">Login</a>
+      <div class="user-menu-container" id="userMenuContainer">
+        <span class="user-menu-button" id="userMenuButton" onclick="toggleDropdown()"></span>
+        <div class="dropdown-content" id="userDropdown">
+          <a href="#profile">My Profile</a>
+          <a href="#history">Donation History</a>
+          <a href="#settings">Settings</a>
+          <a href="#" onclick="logout()">Logout</a>
+        </div>
+      </div>
+      <a href="page.html" class="highlight">Donate Now</a>
+    </div>
+  </nav>
+
+  <div class="tracking-container">
+    <div class="tracking-header">
+      <h1>Track Your Donation</h1>
+      <p>Enter your tracking ID to see the current status and history of your donation.</p>
+    </div>
+    
+    <div class="error-message" id="errorMessage">
+      <i class="fas fa-exclamation-circle"></i>
+      <span id="errorText">Error message will appear here</span>
+    </div>
+    
+    <div class="track-form">
+      <div class="form-group">
+        <label for="trackingId">Tracking ID</label>
+        <input type="text" id="trackingId" placeholder="Enter your tracking ID (e.g., FLABCD1234)" required>
+      </div>
+      <button class="track-button" id="trackButton">
+        <i class="fas fa-search"></i> Track Donation
+      </button>
+    </div>
+    
+    <div class="loading" id="loading">
+      <i class="fas fa-spinner"></i>
+      <p>Loading tracking information...</p>
+    </div>
+    
+    <div id="trackingResults">
+      <div class="donation-details" id="donationDetails">
+        <h2>Donation Information</h2>
+        <div class="detail-row">
+          <div class="detail-label">Tracking ID:</div>
+          <div class="detail-value" id="donationTrackingId">-</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Item:</div>
+          <div class="detail-value" id="donationItem">-</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Quantity:</div>
+          <div class="detail-value" id="donationQuantity">-</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Donor:</div>
+          <div class="detail-value" id="donationDonor">Not displayed for privacy</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Date:</div>
+          <div class="detail-value" id="donationDate">-</div>
+        </div>
+      </div>
+      
+      <h2>Tracking History</h2>
+      <div class="tracking-timeline" id="trackingTimeline">
+        <div class="timeline-line"></div>
+        <!-- Timeline steps will be added dynamically here -->
+      </div>
+      
+      <div class="tracking-actions">
+        <a href="/update-tracking" class="btn btn-primary"><i class="fas fa-edit"></i> Update Status</a>
+        <a href="/page.html" class="btn btn-primary"><i class="fas fa-home"></i> Back to Home</a>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Elements
+      const trackingIdInput = document.getElementById('trackingId');
+      const trackButton = document.getElementById('trackButton');
+      const trackingResults = document.getElementById('trackingResults');
+      const loading = document.getElementById('loading');
+      const errorMessage = document.getElementById('errorMessage');
+      const errorText = document.getElementById('errorText');
+      const donationDetails = document.getElementById('donationDetails');
+      const trackingTimeline = document.getElementById('trackingTimeline');
+      
+      // Donation details elements
+      const donationTrackingId = document.getElementById('donationTrackingId');
+      const donationItem = document.getElementById('donationItem');
+      const donationQuantity = document.getElementById('donationQuantity');
+      const donationDonor = document.getElementById('donationDonor');
+      const donationDate = document.getElementById('donationDate');
+      
+      // Check if there's a tracking ID in the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const trackingIdParam = urlParams.get('trackingId');
+      
+      if (trackingIdParam) {
+        trackingIdInput.value = trackingIdParam;
+        // Trigger tracking
+        setTimeout(() => {
+          trackButton.click();
+        }, 500);
+      }
+      
+      // Track button click handler
+      trackButton.addEventListener('click', function() {
+        const trackingId = trackingIdInput.value.trim();
+        
+        if (!trackingId) {
+          showError('Please enter a valid tracking ID');
+          return;
+        }
+        
+        // Hide any previous errors and results
+        errorMessage.style.display = 'none';
+        trackingResults.style.display = 'none';
+        
+        // Show loading
+        loading.style.display = 'block';
+        
+        // Fetch tracking data
+        fetch(`/api/tracking/${trackingId}`)
+          .then(response => {
+            if (!response.ok) {
+              return response.json().then(data => {
+                throw new Error(data.error || 'Failed to retrieve tracking information');
+              });
+            }
+            return response.json();
+          })
+          .then(data => {
+            // Hide loading
+            loading.style.display = 'none';
+            
+            // Update donation details
+            updateDonationDetails(data.donation);
+            
+            // Generate timeline
+            generateTimeline(data.history);
+            
+            // Show results
+            trackingResults.style.display = 'block';
+          })
+          .catch(error => {
+            // Hide loading
+            loading.style.display = 'none';
+            
+            // Show error
+            showError(error.message);
+          });
+      });
+      
+      // Function to update donation details
+      function updateDonationDetails(donation) {
+        donationTrackingId.textContent = donation.trackingId || '-';
+        donationItem.textContent = donation.title || donation.item || '-';
+        donationQuantity.textContent = donation.quantity ? `${donation.quantity} unit(s)` : '-';
+        // Keep donor name private
+        donationDonor.textContent = 'Not displayed for privacy';
+        
+        // Format date
+        if (donation.date) {
+          const date = new Date(donation.date);
+          donationDate.textContent = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+        } else {
+          donationDate.textContent = '-';
+        }
+      }
+      
+      // Function to generate timeline
+      function generateTimeline(history) {
+        // Clear previous timeline
+        trackingTimeline.innerHTML = '<div class="timeline-line"></div>';
+        
+        if (!history || history.length === 0) {
+          const emptyState = document.createElement('div');
+          emptyState.className = 'tracking-step';
+          emptyState.innerHTML = `
+            <div class="step-content">
+              <div class="step-status">
+                <i class="fas fa-info-circle"></i> No tracking updates found
+              </div>
+              <p>There are no status updates for this donation yet.</p>
+            </div>
+          `;
+          trackingTimeline.appendChild(emptyState);
+          return;
+        }
+        
+        // Define all possible statuses with their icons
+        const allStatuses = [
+          { status: 'Order Requested', icon: 'fas fa-clipboard-check' },
+          { status: 'Facility Reached', icon: 'fas fa-building' },
+          { status: 'Picked Up', icon: 'fas fa-truck' },
+          { status: 'Received', icon: 'fas fa-hand-holding-heart' }
+        ];
+        
+        // Find the current status based on the latest update
+        const currentStatus = history[history.length - 1].status;
+        const currentStatusIndex = allStatuses.findIndex(s => s.status === currentStatus);
+        
+        // Create a step for each status update
+        history.forEach((update, index) => {
+          // Determine the status icon
+          const statusInfo = allStatuses.find(s => s.status === update.status) || 
+                             { status: update.status, icon: 'fas fa-circle' };
+          
+          // Create step element
+          const step = document.createElement('div');
+          step.className = 'tracking-step completed-step';
+          
+          // Format the date
+          const date = new Date(update.timestamp);
+          const formattedDate = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+          const formattedTime = date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          
+          step.innerHTML = `
+            <div class="step-icon">
+              <i class="${statusInfo.icon}"></i>
+            </div>
+            <div class="step-content">
+              <div class="step-status">
+                <i class="${statusInfo.icon}"></i> ${update.status}
+              </div>
+              <div class="step-details">
+                <div class="step-time">
+                  <i class="far fa-calendar-alt"></i> ${formattedDate} at ${formattedTime}
+                </div>
+                <div class="step-user">
+                  <i class="fas fa-user"></i> Updated by: ${update.updatedBy || 'System'}
+                </div>
+              </div>
+              ${update.notes ? `<div class="step-notes">${update.notes}</div>` : ''}
+            </div>
+          `;
+          
+          trackingTimeline.appendChild(step);
+        });
+        
+        // Add pending steps for future statuses
+        for (let i = currentStatusIndex + 1; i < allStatuses.length; i++) {
+          const pendingStatus = allStatuses[i];
+          const pendingStep = document.createElement('div');
+          pendingStep.className = 'tracking-step pending-step';
+          
+          pendingStep.innerHTML = `
+            <div class="step-icon">
+              <i class="${pendingStatus.icon}"></i>
+            </div>
+            <div class="step-content">
+              <div class="step-status">
+                <i class="${pendingStatus.icon}"></i> ${pendingStatus.status}
+              </div>
+              <p>Waiting for update...</p>
+            </div>
+          `;
+          
+          trackingTimeline.appendChild(pendingStep);
+        }
+      }
+      
+      // Function to show error message
+      function showError(message) {
+        errorText.textContent = message;
+        errorMessage.style.display = 'block';
+      }
+      
+      // User authentication functionality
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      const currentUser = localStorage.getItem('currentUser');
+      
+      // Update navigation based on login status
+      updateNavigation(isLoggedIn, currentUser);
+      
+      // Function to update navigation
+      function updateNavigation(isLoggedIn, username) {
+        const loginLink = document.getElementById('loginLink');
+        const signupLink = document.getElementById('signupLink');
+        const userMenuContainer = document.getElementById('userMenuContainer');
+        const userMenuButton = document.getElementById('userMenuButton');
+        
+        if (isLoggedIn && username) {
+          // Hide login/signup links
+          loginLink.style.display = 'none';
+          signupLink.style.display = 'none';
+          
+          // Show user menu
+          userMenuContainer.style.display = 'block';
+          userMenuButton.textContent = username;
+        } else {
+          // Show login/signup links
+          loginLink.style.display = 'inline-block';
+          signupLink.style.display = 'inline-block';
+          
+          // Hide user menu
+          userMenuContainer.style.display = 'none';
+        }
+      }
+      
+      // Function to handle logout
+      window.logout = function() {
+        // Clear login status
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('currentUser');
+        
+        // Update navigation
+        updateNavigation(false, null);
+        
+        // Close dropdown
+        document.getElementById('userDropdown').classList.remove('show');
+        
+        // Redirect to logout endpoint
+        window.location.href = '/logout';
+      };
+      
+      // Function to toggle dropdown
+      window.toggleDropdown = function() {
+        document.getElementById('userDropdown').classList.toggle('show');
+      };
+      
+      // Close dropdown when clicking outside
+      window.onclick = function(event) {
+        if (!event.target.matches('#userMenuButton')) {
+          const dropdowns = document.getElementsByClassName('dropdown-content');
+          for (let i = 0; i < dropdowns.length; i++) {
+            const openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+              openDropdown.classList.remove('show');
+            }
+          }
+        }
+      };
+    });
+  </script>
+</body>
+</html> 

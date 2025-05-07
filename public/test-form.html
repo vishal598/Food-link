@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Donation Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #388E3C;
+    }
+    .response {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e9ffe9;
+      border-left: 4px solid #4CAF50;
+      display: none;
+    }
+    .error {
+      background: #ffebeb;
+      border-left: 4px solid #f44336;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Test Donation Form</h1>
+    <form id="testDonationForm" action="/donate" method="post">
+      <div class="form-group">
+        <label for="donorName">Your Name</label>
+        <input type="text" id="donorName" name="donorName" value="Test User" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="item">Item to Donate</label>
+        <input type="text" id="item" name="item" value="Test Item" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" name="quantity" value="1" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" id="address" name="address" value="123 Test St" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="foodQuality">Food Quality</label>
+        <select id="foodQuality" name="foodQuality" required>
+          <option value="Good" selected>Good</option>
+          <option value="Fair">Fair</option>
+          <option value="Poor">Poor</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="donatedFor">Donated For</label>
+        <input type="text" id="donatedFor" name="donatedFor" value="Anyone in need">
+      </div>
+      
+      <div class="form-group">
+        <label for="type">Type</label>
+        <select id="type" name="type" required>
+          <option value="food" selected>Food</option>
+          <option value="grocery">Grocery</option>
+          <option value="pet-food">Pet Food</option>
+          <option value="clothing">Clothing</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" value="Test Donation">
+      </div>
+      
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description">This is a test donation.</textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" value="Test Location">
+      </div>
+      
+      <button type="submit">Submit Donation</button>
+    </form>
+    
+    <div id="responseMessage" class="response"></div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('testDonationForm');
+      const responseMessage = document.getElementById('responseMessage');
+      
+      // Test if session is active
+      fetch('/api/user')
+        .then(response => response.json())
+        .then(data => {
+          console.log('User session status:', data);
+          if (!data.isLoggedIn) {
+            responseMessage.textContent = 'Warning: You are not logged in. The donation may fail.';
+            responseMessage.className = 'response error';
+            responseMessage.style.display = 'block';
+          }
+        })
+        .catch(error => {
+          console.error('Error checking session:', error);
+        });
+      
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const params = new URLSearchParams();
+        
+        for (const [key, value] of formData.entries()) {
+          params.append(key, value);
+        }
+        
+        // Log the data being sent
+        console.log('Submitting form with data:', Object.fromEntries(params));
+        
+        // Clear any previous messages
+        responseMessage.style.display = 'none';
+        
+        // Send the form data
+        fetch('/donate', {
+          method: 'POST',
+          body: params,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        })
+        .then(response => {
+          console.log('Response status:', response.status);
+          console.log('Response headers:', response.headers);
+          console.log('Redirected:', response.redirected);
+          
+          if (response.redirected) {
+            const url = new URL(response.url);
+            const trackingId = url.searchParams.get('trackingId');
+            
+            if (trackingId) {
+              responseMessage.textContent = `Success! Your donation has been submitted with tracking ID: ${trackingId}`;
+              responseMessage.className = 'response';
+              responseMessage.style.display = 'block';
+              
+              // Optional: Add a link to track the donation
+              const trackLink = document.createElement('a');
+              trackLink.href = `/tracking?trackingId=${trackingId}`;
+              trackLink.textContent = 'Track your donation';
+              trackLink.style.display = 'block';
+              trackLink.style.marginTop = '10px';
+              responseMessage.appendChild(trackLink);
+            } else {
+              responseMessage.textContent = 'Warning: Donation submitted but no tracking ID was returned.';
+              responseMessage.className = 'response error';
+              responseMessage.style.display = 'block';
+            }
+            
+            return;
+          }
+          
+          if (!response.ok) {
+            return response.text().then(text => { 
+              throw new Error(text || 'Unknown error occurred');
+            });
+          }
+          
+          return response.text();
+        })
+        .then(data => {
+          if (data) {
+            responseMessage.textContent = 'Server response: ' + data;
+            responseMessage.className = 'response';
+            responseMessage.style.display = 'block';
+          }
+        })
+        .catch(error => {
+          console.error('Error submitting donation:', error);
+          responseMessage.textContent = 'Error: ' + error.message;
+          responseMessage.className = 'response error';
+          responseMessage.style.display = 'block';
+        });
+      });
+    });
+  </script>
+</body>
+</html> 

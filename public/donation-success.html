@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donation Successful - FoodLink</title>
+  <link rel="stylesheet" href="/page.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4CAF50;
+      --primary-dark: #388E3C;
+      --accent: #8BC34A;
+      --dark: #111;
+      --darker: #000;
+      --light: #fff;
+      --gray: #aaa;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background: var(--darker);
+      color: var(--light);
+      line-height: 1.6;
+    }
+    
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 5%;
+      background: rgba(17, 17, 17, 0.95);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    nav .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    
+    nav .logo::before {
+      content: "";
+      display: inline-block;
+      height: 30px;
+      width: 30px;
+      background-color: var(--primary);
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+    
+    nav .menu {
+      display: flex;
+      gap: 30px;
+    }
+    
+    nav .menu a {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      position: relative;
+      transition: var(--transition);
+    }
+    
+    nav .menu a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      background: var(--primary);
+      left: 0;
+      bottom: -5px;
+      transition: var(--transition);
+    }
+    
+    nav .menu a:hover {
+      color: var(--primary);
+    }
+    
+    nav .menu a:hover::after {
+      width: 100%;
+    }
+    
+    .success-container {
+      max-width: 800px;
+      margin: 120px auto 50px;
+      padding: 50px;
+      background: var(--dark);
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      animation: fadeIn 0.8s ease-out forwards;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Add a subtle background pattern */
+    .success-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.05) 2px, transparent 0),
+        radial-gradient(circle at 75px 75px, rgba(255, 255, 255, 0.05) 2px, transparent 0);
+      background-size: 100px 100px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .success-container > * {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .success-icon {
+      font-size: 6rem;
+      color: var(--primary);
+      margin-bottom: 30px;
+      animation: successPulse 2s infinite;
+      background: linear-gradient(135deg, var(--primary), #6ab04c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+    
+    @keyframes successPulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.15);
+        opacity: 0.9;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    
+    .success-container h1 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 15px;
+      background: linear-gradient(to right, var(--primary), #6ab04c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+    
+    .success-container h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(to right, var(--primary), #6ab04c);
+    }
+    
+    .success-container p {
+      color: #ddd;
+      margin-bottom: 35px;
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+    
+    .tracking-id-container {
+      position: relative;
+      padding: 10px;
+      margin: 30px auto;
+      max-width: 400px;
+      animation: slideUp 0.8s ease forwards 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .tracking-id {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 20px 30px;
+      border-radius: 12px;
+      margin: 0;
+      display: inline-block;
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      border: 2px dashed rgba(76, 175, 80, 0.4);
+      position: relative;
+      color: var(--primary);
+      text-shadow: 0 0 30px rgba(76, 175, 80, 0.2);
+      box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.2),
+        inset 0 0 30px rgba(76, 175, 80, 0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .tracking-id:hover {
+      border-color: rgba(76, 175, 80, 0.7);
+      transform: translateY(-3px);
+      box-shadow: 
+        0 15px 25px rgba(0, 0, 0, 0.25),
+        inset 0 0 30px rgba(76, 175, 80, 0.1);
+    }
+    
+    .copy-button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      position: absolute;
+      right: -10px;
+      top: -10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      font-size: 1.1rem;
+      z-index: 2;
+    }
+    
+    .copy-button:hover {
+      background: var(--primary-dark);
+      transform: scale(1.15) rotate(5deg);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    .copy-feedback {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(76, 175, 80, 0.9);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+    
+    .copy-feedback.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-5px);
+    }
+    
+    .success-actions {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+      animation: fadeIn 0.8s ease forwards 0.6s;
+      opacity: 0;
+    }
+    
+    .btn {
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    
+    .btn i {
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: var(--light);
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transition: 0.5s;
+    }
+    
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    .tracking-info {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(76, 175, 80, 0.1);
+      border-radius: 10px;
+      border-left: 3px solid var(--primary);
+      text-align: left;
+    }
+    
+    .tracking-info h3 {
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+    
+    .tracking-info p {
+      margin-bottom: 15px;
+    }
+    
+    .tracking-info ul {
+      list-style-type: none;
+      margin-bottom: 15px;
+    }
+    
+    .tracking-info li {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .tracking-info li i {
+      color: var(--primary);
+      margin-right: 10px;
+      margin-top: 4px;
+    }
+    
+    /* User dropdown menu */
+    .user-menu-container {
+      position: relative;
+      display: none;
+    }
+    
+    .user-menu-button {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    
+    .user-menu-button:after {
+      content: '\f107';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      margin-left: 5px;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: var(--dark);
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1001;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    
+    .dropdown-content a {
+      color: var(--light);
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.3s;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .show {
+      display: block;
+    }
+    
+    /* Notification styles for toast message */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 5px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .toast.show {
+      opacity: 1;
+    }
+    
+    .toast i {
+      margin-right: 10px;
+    }
+    
+    @media (max-width: 768px) {
+      .success-container {
+        margin: 100px 20px 50px;
+        padding: 30px 20px;
+      }
+      
+      .tracking-id {
+        font-size: 1.2rem;
+        padding: 12px 15px;
+      }
+      
+      .success-actions {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      nav .menu a {
+        display: none;
+      }
+      
+      nav .menu a.highlight {
+        display: inline-block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="page.html" class="logo">FoodLink</a>
+    <div class="menu">
+      <a href="page.html#about">About</a>
+      <a href="page.html#contacts">Contact</a>
+      <a href="page.html#report">Report</a>
+      <a href="signup.html" id="signupLink">Sign Up</a>
+      <a href="index.html" id="loginLink">Login</a>
+      <div class="user-menu-container" id="userMenuContainer">
+        <span class="user-menu-button" id="userMenuButton" onclick="toggleDropdown()"></span>
+        <div class="dropdown-content" id="userDropdown">
+          <a href="#profile">My Profile</a>
+          <a href="#history">Donation History</a>
+          <a href="#settings">Settings</a>
+          <a href="#" onclick="logout()">Logout</a>
+        </div>
+      </div>
+      <a href="page.html" class="highlight">Donate Now</a>
+    </div>
+  </nav>
+
+  <div class="success-container">
+    <div class="success-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <h1>Donation Successful</h1>
+    <p>Thank you for your generous donation! Your contribution will make a real difference in someone's life.</p>
+    
+    <h2>Your Tracking ID</h2>
+    <div class="tracking-id-container">
+      <div class="tracking-id" id="trackingId">
+        Loading...
+        <button class="copy-button" id="copyButton" title="Copy tracking ID">
+          <i class="fas fa-copy"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="tracking-info">
+      <h3><i class="fas fa-info-circle"></i> Important Information</h3>
+      <p>Keep this tracking ID safe. You can use it to:</p>
+      <ul>
+        <li><i class="fas fa-check-circle"></i> Track the status of your donation</li>
+        <li><i class="fas fa-check-circle"></i> Update the progress of your donation</li>
+        <li><i class="fas fa-check-circle"></i> Provide this ID to the recipient or delivery personnel</li>
+      </ul>
+      <p>Your donation will go through the following stages:</p>
+      <ul>
+        <li><i class="fas fa-clipboard-check"></i> <strong>Order Requested</strong>: Initial donation submission</li>
+        <li><i class="fas fa-building"></i> <strong>Facility Reached</strong>: Your donation has arrived at our facility</li>
+        <li><i class="fas fa-truck"></i> <strong>Picked Up</strong>: Donation is on its way to the recipient</li>
+        <li><i class="fas fa-hand-holding-heart"></i> <strong>Received</strong>: Successfully delivered to the recipient</li>
+      </ul>
+    </div>
+    
+    <div class="success-actions">
+      <a href="/tracking" class="btn btn-primary"><i class="fas fa-search"></i> Track Your Donation</a>
+      <a href="/update-tracking" class="btn btn-primary"><i class="fas fa-edit"></i> Update Status</a>
+      <a href="/page.html" class="btn btn-outline"><i class="fas fa-home"></i> Back to Home</a>
+    </div>
+  </div>
+  
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span>Tracking ID copied to clipboard!</span>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get tracking ID from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const trackingId = urlParams.get('trackingId');
+      const trackingIdElement = document.getElementById('trackingId');
+      
+      console.log('URL parameters:', window.location.search);
+      console.log('Extracted tracking ID from URL:', trackingId);
+      
+      if (trackingId) {
+        trackingIdElement.textContent = trackingId;
+      } else {
+        trackingIdElement.textContent = 'No tracking ID found';
+      }
+      
+      // Copy to clipboard functionality
+      const copyButton = document.getElementById('copyButton');
+      const toast = document.getElementById('toast');
+      
+      copyButton.addEventListener('click', function() {
+        const textToCopy = trackingId;
+        
+        if (!textToCopy) return;
+        
+        // Create a temporary textarea element to copy from
+        const textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'absolute';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        
+        // Select and copy the text
+        textarea.select();
+        document.execCommand('copy');
+        
+        // Remove the temporary element
+        document.body.removeChild(textarea);
+        
+        // Show toast notification
+        toast.classList.add('show');
+        setTimeout(function() {
+          toast.classList.remove('show');
+        }, 3000);
+      });
+      
+      // User authentication functionality
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      const currentUser = localStorage.getItem('currentUser');
+      
+      // Update navigation based on login status
+      updateNavigation(isLoggedIn, currentUser);
+      
+      // Function to update navigation
+      function updateNavigation(isLoggedIn, username) {
+        const loginLink = document.getElementById('loginLink');
+        const signupLink = document.getElementById('signupLink');
+        const userMenuContainer = document.getElementById('userMenuContainer');
+        const userMenuButton = document.getElementById('userMenuButton');
+        
+        if (isLoggedIn && username) {
+          // Hide login/signup links
+          loginLink.style.display = 'none';
+          signupLink.style.display = 'none';
+          
+          // Show user menu
+          userMenuContainer.style.display = 'block';
+          userMenuButton.textContent = username;
+        } else {
+          // Show login/signup links
+          loginLink.style.display = 'inline-block';
+          signupLink.style.display = 'inline-block';
+          
+          // Hide user menu
+          userMenuContainer.style.display = 'none';
+        }
+      }
+      
+      // Function to handle logout
+      window.logout = function() {
+        // Clear login status
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('currentUser');
+        
+        // Update navigation
+        updateNavigation(false, null);
+        
+        // Close dropdown
+        document.getElementById('userDropdown').classList.remove('show');
+        
+        // Redirect to logout endpoint
+        window.location.href = '/logout';
+      };
+      
+      // Function to toggle dropdown
+      window.toggleDropdown = function() {
+        document.getElementById('userDropdown').classList.toggle('show');
+      };
+      
+      // Close dropdown when clicking outside
+      window.onclick = function(event) {
+        if (!event.target.matches('#userMenuButton')) {
+          const dropdowns = document.getElementsByClassName('dropdown-content');
+          for (let i = 0; i < dropdowns.length; i++) {
+            const openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+              openDropdown.classList.remove('show');
+            }
+          }
+        }
+      };
+    });
+  </script>
+</body>
+</html> 

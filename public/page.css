@@ -1,0 +1,353 @@
+/* Base Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  body {
+    background: #000;
+    color: #fff;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  /* Select Element Styling */
+  select option {
+    background-color: black;
+    color: white;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: #111;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+  }
+  
+  nav .logo {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  
+  nav .menu a {
+    margin: 0 15px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  nav .menu a:hover {
+    color: #ccc;
+  }
+  
+  /* Hero Section */
+  .hero {
+    height: 90vh;
+    background: linear-gradient(to right, #000 40%, #111 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #fff;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+    color: #aaa;
+    margin-bottom: 25px;
+  }
+  
+  .hero button {
+    background: transparent;
+    border: 2px solid #fff;
+    padding: 10px 20px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    font-size: 1rem;
+  }
+  
+  .hero button:hover {
+    background: #fff;
+    color: #000;
+  }
+  
+  /* Donation Section */
+  .donation-section {
+    padding: 60px 20px;
+    background: #111;
+    text-align: center;
+    animation: fadeInUp 1s ease-in-out;
+  }
+  
+  .donation-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+  }
+  
+  .donation-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  
+  .card {
+    background: #222;
+    padding: 30px;
+    width: 300px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease;
+  }
+  .im1 {
+    background: url('OIP.jpeg');
+
+  }
+  .im2 {
+    background: url('OIP\ \(1\).jpeg');
+
+  }
+
+
+  
+  .card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .card p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #aaa;
+  }
+  
+  .card button {
+    background: #fff;
+    color: #000;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+  
+  .card button:hover {
+    background: #ddd;
+  }
+  
+  /* Donated List & AI Section */
+  .donated-ai-section {
+    padding: 60px 20px;
+    background: #000;
+    text-align: center;
+    animation: fadeInUp 1.2s ease-in-out;
+  }
+  
+  .donated-ai-section h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  .donated-ai-content {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  
+  .donated-box{
+    background: #111;
+    background: url('OIP\ \(3\).jpeg');
+    padding: 30px;
+    border-radius: 10px;
+    width: 300px;
+    transition: transform 0.3s ease;
+  }
+  .ai-box {
+    background: #111;
+    background: url('download.jpeg');
+    padding: 30px;
+    border-radius: 10px;
+    width: 300px;
+    transition: transform 0.3s ease;
+  }
+  
+  .donated-box:hover,
+  .ai-box:hover {
+    transform: translateY(-10px);
+  }
+  
+  .donated-box button,
+  .ai-box button {
+    background: #fff;
+    color: #000;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 15px;
+  }
+  
+  .donated-box button:hover,
+  .ai-box button:hover {
+    background: #ddd;
+  }
+  
+  /* About Section */
+  .about-section {
+    padding: 60px 20px;
+    background: #000;
+    text-align: center;
+  }
+  
+  .about-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .about-section p {
+    max-width: 800px;
+    margin: auto;
+    font-size: 1.1rem;
+    color: #ccc;
+  }
+  
+  /* Contact Section */
+  .contact-section {
+    padding: 60px 20px;
+    background: #111;
+    text-align: center;
+  }
+  
+  .contact-section h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+  
+  .contact-section p {
+    margin-bottom: 30px;
+    color: #aaa;
+  }
+  
+  .contact-section form {
+    max-width: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .contact-section input,
+  .contact-section textarea {
+    padding: 10px;
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    resize: none;
+  }
+  
+  .contact-section button {
+    padding: 10px;
+    background: #fff;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .contact-section button:hover {
+    background: #ddd;
+  }
+  
+  /* Footer */
+  footer {
+    background: #000;
+    padding: 20px;
+    text-align: center;
+    color: #666;
+  }
+  
+  .footer-links {
+    margin-top: 10px;
+  }
+  
+  .footer-links a {
+    margin: 0 10px;
+    color: #888;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  
+  .footer-links a:hover {
+    color: #fff;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .donation-cards,
+    .donated-ai-content {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    nav .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+  
+    .hero h1 {
+      font-size: 2.2rem;
+    }
+  }

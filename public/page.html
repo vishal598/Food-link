@@ -1,0 +1,2606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FoodLink - Make a Difference</title>
+  <link rel="stylesheet" href="/page.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Enhanced UI Styles */
+    :root {
+      --primary: #4CAF50;
+      --primary-dark: #388E3C;
+      --accent: #8BC34A;
+      --dark: #111;
+      --darker: #000;
+      --light: #fff;
+      --gray: #aaa;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background: var(--darker);
+      color: var(--light);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    
+    /* Enhanced Navigation */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 5%;
+      background: rgba(17, 17, 17, 0.95);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+      transition: background 0.3s ease;
+    }
+    
+    nav .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo::before {
+  content: "";
+  display: inline-block;
+  background-image: url("/Screenshot_2025-05-08_032130-removebg-preview.png");
+  background-size: cover;
+  height: 60px;
+  width: 80px;
+  border-radius: 100%;
+  margin-right: 2px;
+  vertical-align: middle;
+}
+
+
+    
+    nav .menu {
+      display: flex;
+      gap: 30px;
+    }
+    
+    nav .menu a {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      position: relative;
+      transition: var(--transition);
+    }
+    
+    nav .menu a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      background: var(--primary);
+      left: 0;
+      bottom: -5px;
+      transition: var(--transition);
+    }
+    
+    nav .menu a:hover {
+      color: var(--primary);
+    }
+    
+    nav .menu a:hover::after {
+      width: 100%;
+    }
+    
+    /* Enhanced Hero Section */
+    .hero {
+      height: 100vh;
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.9) 40%, rgba(17, 17, 17, 0.8) 100%), url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      animation: fadeIn 1s ease-in-out;
+      position: relative;
+    }
+    
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(to top, var(--darker), transparent);
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      z-index: 1;
+    }
+    
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      color: var(--light);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+    
+    .hero h1::after {
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 4px;
+      background: var(--primary);
+      left: 50%;
+      bottom: -10px;
+      transform: translateX(-50%);
+    }
+    
+    .hero p {
+      font-size: 1.4rem;
+      margin-bottom: 40px;
+      color: var(--gray);
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    
+    .btn {
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: var(--light);
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      color: var(--light);
+      border: 2px solid var(--light);
+    }
+    
+    .btn-outline:hover {
+      background: var(--light);
+      color: var(--darker);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .scroll-down {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+      z-index: 10;
+      font-size: 2rem;
+      color: var(--light);
+      cursor: pointer;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+      }
+      40% {
+        transform: translateY(-20px) translateX(-50%);
+      }
+      60% {
+        transform: translateY(-10px) translateX(-50%);
+      }
+    }
+    
+    /* Chatbot Styling */
+    .chatbot-toggle {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+    
+    .chatbot-toggle i {
+      color: var(--light);
+      font-size: 24px;
+    }
+    
+    .chatbot-toggle:hover {
+      transform: scale(1.1);
+      background: var(--primary-dark);
+    }
+    
+    .chatbot-container {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 350px;
+      height: 450px;
+      background: var(--dark);
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      z-index: 999;
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .chatbot-header {
+      padding: 15px 20px;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .chatbot-header h3 {
+      color: var(--light);
+      font-size: 1.2rem;
+      margin: 0;
+    }
+    
+    .chatbot-header .close-btn {
+      color: var(--light);
+      cursor: pointer;
+      font-size: 18px;
+      transition: color 0.3s ease;
+    }
+    
+    .chatbot-header .close-btn:hover {
+      opacity: 0.8;
+    }
+    
+    .chatbot-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .message {
+      padding: 10px 15px;
+      border-radius: 15px;
+      margin-bottom: 10px;
+      max-width: 80%;
+    }
+    
+    .bot-message {
+      background: rgba(76, 175, 80, 0.2);
+      color: var(--light);
+      align-self: flex-start;
+      border-bottom-left-radius: 5px;
+      border-left: 3px solid var(--primary);
+    }
+    
+    .user-message {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--light);
+      align-self: flex-end;
+      border-bottom-right-radius: 5px;
+      border-right: 3px solid #fff;
+    }
+    
+    /* Chatbot loading spinner */
+    .bot-message .fa-spinner {
+      margin-right: 8px;
+      font-size: 0.9rem;
+      color: var(--primary);
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .chatbot-input {
+      padding: 15px;
+      background: rgba(34, 34, 34, 0.8);
+      display: flex;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .chatbot-input input {
+      flex: 1;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--light);
+      outline: none;
+    }
+    
+    .chatbot-input button {
+      background: var(--primary);
+      color: var(--light);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      margin-left: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s ease;
+    }
+    
+    .chatbot-input button:hover {
+      background: var(--primary-dark);
+    }
+    
+    /* Scrollbar styling */
+    .chatbot-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .chatbot-messages::-webkit-scrollbar-track {
+      background: rgba(17, 17, 17, 0.9);
+    }
+    
+    .chatbot-messages::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 10px;
+    }
+
+    /* Enhanced Section Styling */
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .section-header h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px 0;
+    }
+    
+    .divider-line {
+      height: 2px;
+      width: 50px;
+      background-color: var(--primary);
+    }
+    
+    .divider-icon {
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin: 0 15px;
+    }
+    
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--gray);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    /* Enhanced Donation Cards */
+    .donation-section {
+      padding: 100px 5%;
+      background: var(--dark);
+      text-align: center;
+    }
+    
+    .donation-cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin: 50px 0;
+    }
+    
+    .card {
+      width: 350px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--darker);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    .card-image {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    
+    .human-card {
+      background-image: url('https://images.unsplash.com/photo-1593113630400-ea4288922497?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+    }
+    
+    .animal-card {
+      background-image: url('https://images.unsplash.com/photo-1571678432797-0d3e4a4e2152?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+    }
+    
+    .card-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.1));
+    }
+    
+    .card-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card-content {
+      padding: 30px;
+      text-align: left;
+    }
+    
+    .card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .card h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--primary);
+    }
+    
+    .card p {
+      font-size: 1rem;
+      margin-bottom: 20px;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    
+    .card-features {
+      list-style: none;
+      margin-bottom: 25px;
+    }
+    
+    .card-features li {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      color: #ccc;
+    }
+    
+    .card-features i {
+      color: var(--primary);
+      margin-right: 10px;
+      font-size: 14px;
+    }
+    
+    .card-button {
+      display: inline-block;
+      padding: 12px 25px;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .card-button i {
+      margin-left: 5px;
+      transition: transform 0.3s ease;
+    }
+    
+    .card-button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card-button:hover i {
+      transform: translateX(5px);
+    }
+    
+    /* Impact Counter */
+    .impact-counter {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 80px;
+    }
+    
+    .counter-item {
+      text-align: center;
+    }
+    
+    .counter-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: var(--primary);
+    }
+    
+    .counter-label {
+      font-size: 1rem;
+      color: var(--gray);
+      font-weight: 500;
+    }
+
+    /* NGO Section Styling */
+    .ngo-section {
+      padding: 100px 5%;
+      background: var(--darker);
+      text-align: center;
+    }
+    
+    .ngo-cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 50px;
+    }
+    
+    .ngo-card {
+      width: 300px;
+      padding: 40px 30px;
+      background: var(--dark);
+      border-radius: 10px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .ngo-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      border-color: var(--primary);
+    }
+    
+    .ngo-card-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .ngo-card:hover .ngo-card-icon {
+      transform: scale(1.2);
+    }
+    
+    .ngo-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+    
+    .ngo-card p {
+      color: var(--gray);
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+    
+    .ngo-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background: transparent;
+      color: var(--primary);
+      text-decoration: none;
+      border: 2px solid var(--primary);
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .ngo-button i {
+      margin-left: 5px;
+      transition: transform 0.3s ease;
+    }
+    
+    .ngo-button:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .ngo-button:hover i {
+      transform: translateX(5px);
+    }
+    
+    .partner-logos {
+      margin-top: 80px;
+    }
+    
+    .partner-label {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: var(--gray);
+    }
+    
+    .logos-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+    
+    .partner-logo {
+      width: 120px;
+      height: 80px;
+      background: var(--dark);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      color: var(--light);
+      transition: all 0.3s ease;
+    }
+    
+    .partner-logo:hover {
+      border-color: var(--primary);
+      transform: scale(1.05);
+    }
+
+    /* About Section Styling */
+    .about-section {
+      padding: 100px 5%;
+      background: var(--dark);
+    }
+    
+    .about-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 50px;
+      margin-top: 50px;
+      align-items: center;
+    }
+    
+    .about-image {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .about-image img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .about-text {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .about-text h3 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    .about-text h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--primary);
+    }
+    
+    .about-text p {
+      font-size: 1.1rem;
+      color: var(--gray);
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+    
+    .about-values {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin: 40px 0;
+    }
+    
+    .value-item {
+      flex: 1;
+      min-width: 200px;
+    }
+    
+    .value-icon {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    
+    .value-item h4 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+    
+    .value-item p {
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+    
+    .team-preview {
+      margin-top: 40px;
+    }
+    
+    .team-members {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .team-member {
+      text-align: center;
+      flex: 1;
+      min-width: 120px;
+    }
+    
+    .member-photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: #333;
+      margin: 0 auto 15px;
+      background-size: cover;
+      background-position: center;
+      border: 3px solid var(--primary);
+    }
+    
+    .member-1 {
+      background-image: url('https://randomuser.me/api/portraits/women/44.jpg');
+    }
+    
+    .member-2 {
+      background-image: url('https://randomuser.me/api/portraits/men/32.jpg');
+    }
+    
+    .member-3 {
+      background-image: url('https://randomuser.me/api/portraits/women/68.jpg');
+    }
+    
+    .member-v {
+      background-image: url('member-photo member-v.jpg');
+    }
+    
+    .member-name {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .member-role {
+      font-size: 0.9rem;
+      color: var(--primary);
+    }
+    
+    /* Report Section Styling */
+    .report-section {
+      padding: 100px 5%;
+      background: var(--darker);
+    }
+    
+    .report-content {
+      margin-top: 50px;
+    }
+    
+    .report-options {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+    
+    .report-card {
+      width: 300px;
+      padding: 30px;
+      background: var(--dark);
+      border-radius: 10px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .report-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .report-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+    
+    .report-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+    
+    .report-card p {
+      color: var(--gray);
+      margin-bottom: 25px;
+    }
+    
+    .report-button {
+      padding: 10px 20px;
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .report-button:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .report-form-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--dark);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .report-form h3 {
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      color: var(--light);
+      font-size: 1rem;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+    
+    .submit-report {
+      width: 100%;
+      padding: 12px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    
+    .submit-report:hover {
+      background: var(--primary-dark);
+    }
+    
+    /* Contact Section Styling */
+    .contact-section {
+      padding: 100px 5%;
+      background: var(--dark);
+    }
+    
+    .contact-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 50px;
+      margin-top: 50px;
+    }
+    
+    .contact-info {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      align-content: flex-start;
+    }
+    
+    .contact-card {
+      background: var(--darker);
+      padding: 25px;
+      border-radius: 10px;
+      width: calc(50% - 15px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .contact-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+    }
+    
+    .contact-icon {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    
+    .contact-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+    
+    .contact-card p {
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    
+    .social-media {
+      width: 100%;
+      margin-top: 20px;
+      background: var(--darker);
+      padding: 25px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .social-media h3 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--light);
+      transition: all 0.3s ease;
+    }
+    
+    .social-icon:hover {
+      background: var(--primary);
+      transform: translateY(-5px);
+    }
+    
+    .contact-form-container {
+      flex: 1;
+      min-width: 300px;
+      background: var(--darker);
+      padding: 40px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .form-row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .form-row .form-group {
+      flex: 1;
+      margin-bottom: 0;
+    }
+    
+    .submit-contact {
+      width: 100%;
+      padding: 12px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .submit-contact i {
+      margin-left: 10px;
+      transition: transform 0.3s ease;
+    }
+    
+    .submit-contact:hover {
+      background: var(--primary-dark);
+    }
+    
+    .submit-contact:hover i {
+      transform: translateX(5px);
+    }
+    
+    /* Enhanced Footer */
+    footer {
+      background: var(--darker);
+      padding: 80px 5% 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 50px;
+      margin-bottom: 50px;
+    }
+    
+    .footer-logo {
+      flex: 2;
+      min-width: 300px;
+    }
+    
+    .footer-logo .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .footer-logo .logo::before {
+      content: "";
+      display: inline-block;
+      height: 30px;
+      width: 30px;
+      background-color: var(--primary);
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+    
+    .footer-logo p {
+      color: var(--gray);
+      max-width: 400px;
+      line-height: 1.7;
+    }
+    
+    .footer-links-container {
+      flex: 3;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+    
+    .footer-column {
+      flex: 1;
+      min-width: 150px;
+    }
+    
+    .footer-column h3 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--primary);
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: var(--gray);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+    
+    .footer-links a i {
+      margin-right: 8px;
+      font-size: 0.8rem;
+      color: var(--primary);
+    }
+    
+    .footer-links a:hover {
+      color: var(--primary);
+      transform: translateX(5px);
+    }
+    
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    
+    .footer-bottom p {
+      color: var(--gray);
+    }
+    
+    .footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+    
+    .footer-legal a {
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-size: 0.9rem;
+    }
+    
+    .footer-legal a:hover {
+      color: var(--primary);
+    }
+    
+    /* Animation for scroll down */
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+      }
+      40% {
+        transform: translateY(-20px) translateX(-50%);
+      }
+      60% {
+        transform: translateY(-10px) translateX(-50%);
+      }
+    }
+    
+    /* Media Queries */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1.1rem;
+      }
+      
+      .hero-buttons {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .section-header h2 {
+        font-size: 2rem;
+      }
+      
+      .contact-card {
+        width: 100%;
+      }
+      
+      .form-row {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        gap: 40px;
+      }
+      
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      nav .menu {
+        display: none;
+      }
+      
+      nav {
+        padding: 15px 5%;
+      }
+    }
+
+    /* User dropdown menu */
+    .user-menu-container {
+      position: relative;
+      display: none;
+    }
+    
+    .user-menu-button {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    
+    .user-menu-button:after {
+      content: '\f107';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      margin-left: 5px;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: var(--dark);
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1001;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    
+    .dropdown-content a {
+      color: var(--light);
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.3s;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .show {
+      display: block;
+    }
+
+    /* Improved Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      overflow-y: auto;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+    
+    .modal-content {
+      background-color: var(--dark);
+      margin: 50px auto;
+      padding: 40px;
+      border-radius: 15px;
+      max-width: 700px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      animation: slideDown 0.5s ease forwards;
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    
+    @keyframes slideDown {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      font-size: 28px;
+      font-weight: bold;
+      color: var(--gray);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      height: 40px;
+      width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    
+    .close-modal:hover {
+      color: var(--primary);
+      background: rgba(255, 255, 255, 0.1);
+      transform: rotate(90deg);
+    }
+    
+    .modal h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.2rem;
+      position: relative;
+      padding-bottom: 15px;
+      color: var(--light);
+      background: linear-gradient(to right, var(--primary), #6ab04c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+    
+    .modal h2::after {
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(to right, var(--primary), #6ab04c);
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+      transition: all 0.3s ease;
+    }
+    
+    .form-group:focus-within {
+      transform: translateY(-2px);
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 500;
+      font-size: 1.05rem;
+      color: #eee;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: var(--light);
+      font-size: 1.05rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    
+    .form-group input[type="file"] {
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .form-group small {
+      display: block;
+      margin-top: 8px;
+      color: #aaa;
+      font-size: 0.85rem;
+    }
+    
+    .btn-primary {
+      width: 100%;
+      padding: 16px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.5px;
+      margin-top: 15px;
+    }
+    
+    .btn-primary:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transition: 0.5s;
+    }
+    
+    .btn-primary:hover:before {
+      left: 100%;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Form sections styling */
+    .form-section {
+      margin-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 25px;
+    }
+    
+    .form-section-title {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+    
+    .form-section-title i {
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div  class="logo">FoodLink
+    </div>
+    <div class="menu">
+      <a href="#about">About</a>
+      <a href="#contacts">Contact</a>
+      <a href="#report">Report</a>
+      <a href="signup.html" id="signupLink">Sign Up</a>
+      <a href="index.html" id="loginLink">Login</a>
+      <a href="tracking.html"><i class="fas fa-search"></i> Track Donation</a>
+      <a href="update-tracking.html"><i class="fas fa-edit"></i> Update Status</a>
+      <div class="user-menu-container" id="userMenuContainer">
+        <span class="user-menu-button" id="userMenuButton" onclick="toggleDropdown()"></span>
+        <div class="dropdown-content" id="userDropdown">
+          <a href="#profile">My Profile</a>
+          <a href="#history">Donation History</a>
+          <a href="#settings">Settings</a>
+          <a href="#" onclick="logout()">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Sharing Food, Spreading Hope</h1>
+      <p>Join our community-driven initiative to reduce food waste and support those in need through mindful donations.</p>
+      <div class="hero-buttons">
+        <button class="btn btn-outline" id="donateToday" style="padding: 10px 22px; font-size: 0.9rem;">Donate Today</button>
+        <button class="btn btn-outline">Learn More</button>
+      </div>
+    </div>
+    <div class="scroll-down">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- Donation Cards -->
+  <section class="donation-section">
+    <div class="section-header">
+      <h2>How You Can Help</h2>
+      <div class="section-divider">
+        <span class="divider-line"></span>
+        <span class="divider-icon"><i class="fas fa-heart"></i></span>
+        <span class="divider-line"></span>
+      </div>
+      <p class="section-subtitle">Choose a cause that resonates with you and make a meaningful contribution</p>
+    </div>
+    
+    <div class="donation-cards">
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1517331156700-3c241d2b4d83?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+          <div class="card-overlay"></div>
+          <div class="card-badge">Popular</div>
+        </div>
+        <div class="card-content">
+          <h3>Support Animals</h3>
+          <p>Provide essential food and care to shelters looking after stray and rescued animals in need.</p>
+          <ul class="card-features">
+            <li><i class="fas fa-check-circle"></i> Helps vulnerable animals</li>
+            <li><i class="fas fa-check-circle"></i> Supports local shelters</li>
+            <li><i class="fas fa-check-circle"></i> Improves animal welfare</li>
+          </ul>
+          <button class="card-button open-donation-form">Submit Donation <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+          <div class="card-overlay"></div>
+          <div class="card-badge">New</div>
+        </div>
+        <div class="card-content">
+          <h3>Make a Donation</h3>
+          <p>Have items to donate? Submit your donation details here to help those in need.</p>
+          <ul class="card-features">
+            <li><i class="fas fa-check-circle"></i> Easy submission process</li>
+            <li><i class="fas fa-check-circle"></i> Connect with receivers</li>
+            <li><i class="fas fa-check-circle"></i> Track your impact</li>
+          </ul>
+          <button class="card-button open-donation-form">Submit Donation <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="impact-counter">
+      <div class="counter-item">
+        <div class="counter-value">5,000+</div>
+        <div class="counter-label">Meals Donated</div>
+      </div>
+      <div class="counter-item">
+        <div class="counter-value">150+</div>
+        <div class="counter-label">Active Donors</div>
+      </div>
+      <div class="counter-item">
+        <div class="counter-value">20+</div>
+        <div class="counter-label">Partner NGOs</div>
+      </div>
+      <div class="counter-item">
+        <div class="counter-value">95%</div>
+        <div class="counter-label">Delivery Rate</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NGO & Shelters Section -->
+  <section class="ngo-section">
+    <div class="section-header">
+      <h2>For NGOs & Animal Shelters</h2>
+      <div class="section-divider">
+        <span class="divider-line"></span>
+        <span class="divider-icon"><i class="fas fa-hands-helping"></i></span>
+        <span class="divider-line"></span>
+      </div>
+      <p class="section-subtitle">Resources and tools for organizations making a difference</p>
+    </div>
+    
+    <div class="ngo-cards">
+      <div class="ngo-card">
+        <div class="ngo-card-icon">
+          <i class="fas fa-clipboard-list"></i>
+        </div>
+        <h3>Donated Items</h3>
+        <p>Access a comprehensive list of available donations from our generous community members.</p>
+        <a href="list.html" class="ngo-button">View Available Items <i class="fas fa-arrow-right"></i></a>
+      </div>
+      
+      <div class="ngo-card">
+        <div class="ngo-card-icon">
+          <i class="fas fa-robot"></i>
+        </div>
+        <h3>AI Demand Prediction</h3>
+        <p>Utilize our smart algorithm that forecasts donation needs based on historical data and current trends.</p>
+        <a href="analytics.html" class="ngo-button">Access Analytics <i class="fas fa-arrow-right"></i></a>
+      </div>
+      
+      <div class="ngo-card">
+        <div class="ngo-card-icon">
+          <i class="fas fa-handshake"></i>
+        </div>
+        <h3>Partner Program</h3>
+        <p>Join our network of verified organizations to receive priority access to donations and resources.</p>
+        <a href="#" class="ngo-button">Apply Now <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+    
+    <div class="partner-logos">
+      <div class="partner-label">Our Trusted Partners:</div>
+      <div class="logos-container">
+        <div class="partner-logo">NGO1</div>
+        <div class="partner-logo">NGO2</div>
+        <div class="partner-logo">Shelter</div>
+        <div class="partner-logo">Care</div>
+        <div class="partner-logo">Help</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about-section">
+    <div class="section-header">
+      <h2>About FoodLink</h2>
+      <div class="section-divider">
+        <span class="divider-line"></span>
+        <span class="divider-icon"><i class="fas fa-info-circle"></i></span>
+        <span class="divider-line"></span>
+      </div>
+      <p class="section-subtitle">Our mission, vision, and impact</p>
+    </div>
+    
+    <div class="about-content">
+      <div class="about-image">
+        <img src="https://images.unsplash.com/photo-1541802645635-11f2286a7482?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="People helping with food donations">
+      </div>
+      
+      <div class="about-text">
+        <h3>Our Mission</h3>
+        <p>
+          FoodLink is a community-driven platform committed to reducing food waste and supporting those in need. 
+          We connect donors with verified NGOs and shelters to create real impact in our communities.
+        </p>
+        
+        <div class="about-values">
+          <div class="value-item">
+            <div class="value-icon"><i class="fas fa-recycle"></i></div>
+            <h4>Reduce Waste</h4>
+            <p>We aim to minimize food waste by connecting excess food with those who need it most.</p>
+          </div>
+          
+          <div class="value-item">
+            <div class="value-icon"><i class="fas fa-hands-helping"></i></div>
+            <h4>Support Community</h4>
+            <p>Building stronger communities through the power of sharing and caring.</p>
+          </div>
+          
+          <div class="value-item">
+            <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
+            <h4>Ensure Safety</h4>
+            <p>All donations are verified and safely delivered to maintain quality and trust.</p>
+          </div>
+        </div>
+        
+        <div class="team-preview">
+          <h3>Our Team</h3>
+          <p>FoodLink is powered by a passionate team of volunteers, developers, and community organizers dedicated to making a difference.</p>
+          <div class="team-members">
+            <div class="team-member">
+              <div class="member-photo member-v"></div>
+              <div class="member-name">Vishal Bagga</div>
+              <div class="member-role">Founder and Technology Lead</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Report Section -->
+  <section id="report" class="report-section">
+    <div class="section-header">
+      <h2>Report Issues</h2>
+      <div class="section-divider">
+        <span class="divider-line"></span>
+        <span class="divider-icon"><i class="fas fa-exclamation-circle"></i></span>
+        <span class="divider-line"></span>
+      </div>
+      <p class="section-subtitle">Help us maintain quality and trust by reporting issues</p>
+    </div>
+    
+    <div class="report-content">
+      <div class="report-options">
+        <div class="report-card">
+          <div class="report-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <h3>Report Food Quality</h3>
+          <p>Report issues with the quality of food you've received or donated</p>
+          <button class="report-button" data-type="quality">Report Now</button>
+        </div>
+        
+        <div class="report-card">
+          <div class="report-icon"><i class="fas fa-car-crash"></i></div>
+          <h3>Delivery Issues</h3>
+          <p>Report problems with donation pickup or delivery</p>
+          <button class="report-button" data-type="delivery">Report Now</button>
+        </div>
+        
+        <div class="report-card">
+          <div class="report-icon"><i class="fas fa-user-shield"></i></div>
+          <h3>Suspicious Activity</h3>
+          <p>Report suspicious users or potentially fraudulent activity</p>
+          <button class="report-button" data-type="suspicious">Report Now</button>
+        </div>
+      </div>
+      
+      <div class="report-form-container">
+        <form id="reportForm" class="report-form">
+          <h3>Submit a Report</h3>
+          <div class="form-group">
+            <label for="reportType">Issue Type</label>
+            <select id="reportType" required>
+              <option value="">Select an issue type</option>
+              <option value="quality">Food Quality Issue</option>
+              <option value="delivery">Delivery Problem</option>
+              <option value="suspicious">Suspicious Activity</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="reportName">Your Name</label>
+            <input type="text" id="reportName" placeholder="Your full name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="reportEmail">Email Address</label>
+            <input type="email" id="reportEmail" placeholder="Your email address" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="reportDetails">Issue Details</label>
+            <textarea id="reportDetails" rows="5" placeholder="Please describe the issue in detail" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="reportEvidence">Upload Evidence (Optional)</label>
+            <input type="file" id="reportEvidence">
+          </div>
+          
+          <button type="submit" class="submit-report">Submit Report</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contacts" class="contact-section">
+    <div class="section-header">
+      <h2>Contact Us</h2>
+      <div class="section-divider">
+        <span class="divider-line"></span>
+        <span class="divider-icon"><i class="fas fa-envelope"></i></span>
+        <span class="divider-line"></span>
+      </div>
+      <p class="section-subtitle">Have questions or feedback? Reach out to our team</p>
+    </div>
+    
+    <div class="contact-container">
+      <div class="contact-info">
+        <div class="contact-card">
+          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <h3>Our Location</h3>
+          <p>Chitkara university<br>solan, baddi</p>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+          <h3>Phone Number</h3>
+          <p>Main: 8054486933<br>Support: 9417861758</p>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <h3>Email Address</h3>
+          <p>vishalbagga598@gmail.com<br>support@foodlink.org</p>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon"><i class="fas fa-clock"></i></div>
+          <h3>Working Hours</h3>
+          <p>Monday-Friday: 9am-5pm<br>Weekend: 10am-2pm</p>
+        </div>
+        
+        <div class="social-media">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+            <a href="https://www.instagram.com/mehh_vishal/" class="social-icon"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="contact-form-container">
+        <form class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contactName">Your Name</label>
+              <input type="text" id="contactName" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="contactEmail">Email Address</label>
+              <input type="email" id="contactEmail" placeholder="Enter your email address" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="contactSubject">Subject</label>
+            <input type="text" id="contactSubject" placeholder="What is this regarding?">
+          </div>
+          
+          <div class="form-group">
+            <label for="contactMessage">Message</label>
+            <textarea id="contactMessage" rows="5" placeholder="Type your message here..." required></textarea>
+          </div>
+          
+          <button type="submit" class="submit-contact">Send Message <i class="fas fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enhanced Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <div class="logo">FoodLink</div>
+        <p>Connecting donors with those in need to create a better world.</p>
+      </div>
+      
+      <div class="footer-links-container">
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+            <li><a href="#about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+            <li><a href="#contacts"><i class="fas fa-chevron-right"></i> Contact</a></li>
+            <li><a href="#report"><i class="fas fa-chevron-right"></i> Report Issues</a></li>
+            <li><a href="signup.html" id="footerSignupLink"><i class="fas fa-chevron-right"></i> Sign Up</a></li>
+            <li><a href="index.html" id="footerLoginLink"><i class="fas fa-chevron-right"></i> Login</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>For Donors</h3>
+          <ul class="footer-links">
+            <li><a href="poor.html"><i class="fas fa-chevron-right"></i> Donate Food</a></li>
+            <li><a href="animal.html"><i class="fas fa-chevron-right"></i> Support Animals</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Success Stories</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>For NGOs</h3>
+          <ul class="footer-links">
+            <li><a href="list.html"><i class="fas fa-chevron-right"></i> Available Donations</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Become a Partner</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Resources</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Guidelines</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2024 FoodLink. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chatbot Toggle Button -->
+  <div class="chatbot-toggle">
+    <i class="fas fa-comments"></i>
+  </div>
+
+  <!-- Chatbot Container -->
+  <div class="chatbot-container">
+    <div class="chatbot-header">
+      <h3>FoodLink Assistant</h3>
+      <div class="close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+    </div>
+    <div class="chatbot-messages">
+      <div class="message bot-message">
+        Hello! I'm your FoodLink assistant powered by AI. You can ask me about:
+        <ul style="margin-top: 8px; margin-bottom: 5px; padding-left: 20px;">
+          <li>How to make donations</li>
+          <li>Types of donations we accept</li>
+          <li>How to request donations</li>
+          <li>Our mission and values</li>
+        </ul>
+        How can I help you today?
+      </div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" placeholder="Type your message here..." />
+      <button type="submit">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Add donation form modal -->
+  <div class="modal" id="donationModal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Donate Items</h2>
+      <form id="donationForm" action="/donate" method="post">
+        <div class="form-section">
+          <div class="form-section-title">
+            <i class="fas fa-user-shield"></i> Authentication Information
+          </div>
+          
+          <div class="form-group">
+            <label for="donorNameInput">Your Name (Required for future tracking updates)</label>
+            <input type="text" id="donorNameInput" name="donorName" placeholder="Enter your full name" required>
+            <small>This name will be required to update the status of your donation later. It will not be visible to other users.</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="donorEmail">Your Email (Required for request notifications)</label>
+            <input type="email" id="donorEmail" name="donorEmail" placeholder="Enter your email address" required>
+            <small>We'll use this to notify you when someone requests your donation. Your email will not be displayed publicly.</small>
+          </div>
+        </div>
+        
+        <div class="form-section">
+          <div class="form-section-title">
+            <i class="fas fa-info-circle"></i> Basic Information
+          </div>
+          
+          <div class="form-group">
+            <label for="donationTitle">Donation Title</label>
+            <input type="text" id="donationTitle" name="title" placeholder="E.g., Fresh Vegetables, Canned Food, etc." required>
+          </div>
+          
+          <div class="form-group">
+            <label for="donationType">Donation Type</label>
+            <select id="donationType" name="type" required>
+              <option value="">Select Type</option>
+              <option value="food">Food</option>
+              <option value="grocery">Grocery</option>
+              <option value="pet-food">Pet Food</option>
+              <option value="clothing">Clothing</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="donationQuantity">Quantity</label>
+            <input type="text" id="donationQuantity" name="quantity" placeholder="Enter quantity" required>
+          </div>
+        </div>
+        
+        <div class="form-section">
+          <div class="form-section-title">
+            <i class="fas fa-align-left"></i> Description & Details
+          </div>
+          
+          <div class="form-group">
+            <label for="donationDescription">Description</label>
+            <textarea id="donationDescription" name="description" rows="4" placeholder="Describe your donation in detail" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="donationImage">Upload Image</label>
+            <input type="file" id="donationImage" name="image" accept="image/*">
+            <small>Upload an image of your donation (max 5MB)</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="donationExpiry">Expiry Date (if applicable)</label>
+            <input type="date" id="donationExpiry" name="expiry">
+          </div>
+        </div>
+        
+        <div class="form-section">
+          <div class="form-section-title">
+            <i class="fas fa-map-marker-alt"></i> Pickup Information
+          </div>
+          
+          <div class="form-group">
+            <label for="donationLocation">Pickup Location</label>
+            <input type="text" id="donationLocation" name="location" placeholder="Enter your address" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="donationContact">Contact Number</label>
+            <input type="tel" id="donationContact" name="contact" placeholder="Your phone number" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <input type="hidden" id="donorName" name="donorName" value="">
+          <input type="hidden" id="item" name="item" value="">
+          <input type="hidden" id="address" name="address" value="">
+          <input type="hidden" id="foodQuality" name="foodQuality" value="Good">
+          <input type="hidden" id="donatedFor" name="donatedFor" value="Anyone in need">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-heart"></i> Submit Donation
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Chatbot functionality
+      const chatbotToggle = document.querySelector('.chatbot-toggle');
+      const chatbotContainer = document.querySelector('.chatbot-container');
+      const closeBtn = document.querySelector('.close-btn');
+      const chatbotInput = document.querySelector('.chatbot-input input');
+      const sendBtn = document.querySelector('.chatbot-input button');
+      const messagesContainer = document.querySelector('.chatbot-messages');
+      
+      // Toggle chatbot visibility
+      chatbotToggle.addEventListener('click', function() {
+        chatbotContainer.style.display = 'flex';
+        chatbotToggle.style.display = 'none';
+      });
+      
+      // Close chatbot
+      closeBtn.addEventListener('click', function() {
+        chatbotContainer.style.display = 'none';
+        chatbotToggle.style.display = 'flex';
+      });
+      
+      // Send message function
+      function sendMessage() {
+        const messageText = chatbotInput.value.trim();
+        
+        if (messageText !== '') {
+          // Add user message
+          const userMessageElement = document.createElement('div');
+          userMessageElement.classList.add('message', 'user-message');
+          userMessageElement.textContent = messageText;
+          messagesContainer.appendChild(userMessageElement);
+          
+          // Clear input
+          chatbotInput.value = '';
+          
+          // Scroll to bottom
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+          
+          // Add loading indicator
+          const loadingElement = document.createElement('div');
+          loadingElement.classList.add('message', 'bot-message');
+          loadingElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Thinking...';
+          messagesContainer.appendChild(loadingElement);
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+          
+          // Build prompt to keep responses focused on FoodLink project
+          const prompt = `The user is asking about the FoodLink project, which is a platform for food donations. 
+          It allows users to donate food items to those in need, particularly supporting humans and animals.
+          The platform features donation listings, user accounts, and request capabilities.
+          
+          User query: ${messageText}
+          
+          If the query is not related to the FoodLink platform, food donations, or functionality of the website, 
+          politely redirect the user to ask about the FoodLink project instead.`;
+          
+          // Call Gemini API
+          fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyAU90ErGfsImpwuNkpdvIqa4s2rV6CC2-E`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              contents: [{
+                parts: [{ text: prompt }]
+              }]
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+            // Remove loading indicator
+            messagesContainer.removeChild(loadingElement);
+            
+            let botResponse = "I'm sorry, I couldn't process your request. Please try again.";
+            
+            // Extract response from Gemini API
+            if (data.candidates && data.candidates[0] && data.candidates[0].content && 
+                data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
+              botResponse = data.candidates[0].content.parts[0].text;
+              
+              // Clean up the response - remove any markdown formatting if present
+              botResponse = botResponse.replace(/```[a-z]*\n/g, '').replace(/```/g, '');
+            }
+            
+            // Add bot response
+            const botMessageElement = document.createElement('div');
+            botMessageElement.classList.add('message', 'bot-message');
+            
+            // Format the response to preserve paragraphs if needed
+            botMessageElement.innerHTML = botResponse
+              .split('\n\n')
+              .map(paragraph => `<p>${paragraph.replace(/\n/g, '<br>')}</p>`)
+              .join('');
+            
+            messagesContainer.appendChild(botMessageElement);
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+          })
+          .catch(error => {
+            // Remove loading indicator
+            messagesContainer.removeChild(loadingElement);
+            
+            // Display error message
+            const errorMessageElement = document.createElement('div');
+            errorMessageElement.classList.add('message', 'bot-message');
+            errorMessageElement.textContent = "Sorry, I encountered an error processing your request. Please try again later.";
+            messagesContainer.appendChild(errorMessageElement);
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            console.error('Error calling Gemini API:', error);
+          });
+        }
+      }
+      
+      // Send message on button click
+      sendBtn.addEventListener('click', sendMessage);
+      
+      // Send message on Enter key
+      chatbotInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          sendMessage();
+        }
+      });
+      
+      // Report form handling
+      const reportButtons = document.querySelectorAll('.report-button');
+      const reportTypeSelect = document.getElementById('reportType');
+      
+      if (reportButtons.length > 0 && reportTypeSelect) {
+        reportButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const reportType = this.getAttribute('data-type');
+            reportTypeSelect.value = reportType;
+            
+            // Scroll to form
+            document.querySelector('.report-form-container').scrollIntoView({
+              behavior: 'smooth'
+            });
+          });
+        });
+      }
+      
+      // Scroll down button in hero section
+      const scrollDownBtn = document.querySelector('.scroll-down');
+      if (scrollDownBtn) {
+        scrollDownBtn.addEventListener('click', function() {
+          const donationSection = document.querySelector('.donation-section');
+          if (donationSection) {
+            donationSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
+      
+      // Sticky header effect
+      const nav = document.querySelector('nav');
+      let scrolled = false;
+      
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+          if (!scrolled) {
+            nav.style.background = 'rgba(0, 0, 0, 0.95)';
+            nav.style.padding = '15px 5%';
+            scrolled = true;
+          }
+        } else {
+          if (scrolled) {
+            nav.style.background = 'rgba(17, 17, 17, 0.95)';
+            nav.style.padding = '20px 5%';
+            scrolled = false;
+          }
+        }
+      });
+      
+      // Form submission handling
+      const contactForm = document.querySelector('.contact-form');
+      if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Show success message (in a real application you would send the data to a server)
+          alert('Thank you for your message! We will get back to you soon.');
+          contactForm.reset();
+        });
+      }
+      
+      const reportForm = document.getElementById('reportForm');
+      if (reportForm) {
+        reportForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Show success message (in a real application you would send the data to a server)
+          alert('Thank you for your report! We will investigate this issue.');
+          reportForm.reset();
+        });
+      }
+
+      // Check login status when page loads
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      const currentUser = localStorage.getItem('currentUser');
+      
+      // Update navigation based on login status
+      updateNavigation(isLoggedIn, currentUser);
+    });
+
+    // Function to update navigation
+    function updateNavigation(isLoggedIn, username) {
+      const loginLink = document.getElementById('loginLink');
+      const signupLink = document.getElementById('signupLink');
+      const userMenuContainer = document.getElementById('userMenuContainer');
+      const userMenuButton = document.getElementById('userMenuButton');
+      const footerLoginLink = document.getElementById('footerLoginLink');
+      const footerSignupLink = document.getElementById('footerSignupLink');
+      
+      if (isLoggedIn && username) {
+        // Hide login/signup links
+        loginLink.style.display = 'none';
+        signupLink.style.display = 'none';
+        footerLoginLink.style.display = 'none';
+        footerSignupLink.style.display = 'none';
+        
+        // Show user menu
+        userMenuContainer.style.display = 'block';
+        userMenuButton.textContent = username;
+      } else {
+        // Show login/signup links
+        loginLink.style.display = 'inline-block';
+        signupLink.style.display = 'inline-block';
+        footerLoginLink.style.display = 'block';
+        footerSignupLink.style.display = 'block';
+        
+        // Hide user menu
+        userMenuContainer.style.display = 'none';
+      }
+    }
+    
+    // Function to handle logout
+    function logout() {
+      // Clear login status
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('currentUser');
+      
+      // Update navigation
+      updateNavigation(false, null);
+      
+      // Close dropdown
+      document.getElementById('userDropdown').classList.remove('show');
+    }
+    
+    // Function to toggle dropdown
+    function toggleDropdown() {
+      document.getElementById('userDropdown').classList.toggle('show');
+    }
+    
+    // Close dropdown when clicking outside
+    window.onclick = function(event) {
+      if (!event.target.matches('#userMenuButton')) {
+        const dropdowns = document.getElementsByClassName('dropdown-content');
+        for (let i = 0; i < dropdowns.length; i++) {
+          const openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+
+    // Function to open donation modal
+    function openDonationModal() {
+      document.getElementById('donationModal').style.display = 'block';
+      document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+    
+    // Function to close donation modal
+    function closeDonationModal() {
+      document.getElementById('donationModal').style.display = 'none';
+      document.body.style.overflow = 'auto'; // Re-enable scrolling
+    }
+    
+    // Add donation form submission handler
+    document.addEventListener('DOMContentLoaded', function() {
+      // Existing DOMContentLoaded code remains...
+      
+      // Get the modal elements
+      const donationModal = document.getElementById('donationModal');
+      const closeModalBtn = document.querySelector('.close-modal');
+      const donationForm = document.getElementById('donationForm');
+      
+      // Handle "Donate Today" button separately - scroll to donation section instead of opening modal
+      const donateTodayBtn = document.getElementById('donateToday');
+      if (donateTodayBtn) {
+        donateTodayBtn.addEventListener('click', function() {
+          const donationSection = document.querySelector('.donation-section');
+          if (donationSection) {
+            donationSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
+      
+      // Get all other donate buttons (excluding the main "Donate Today" button)
+      const donateButtons = document.querySelectorAll('.btn-primary:not(#donateToday)');
+      donateButtons.forEach(button => {
+        // Check if the button has text content that indicates it's a donate button
+        if (button.textContent.trim().includes('Donate') || 
+            button.textContent.trim().includes('Feed')) {
+          button.addEventListener('click', openDonationModal);
+        }
+      });
+      
+      // Add click handler for the "Make a Donation" card button
+      const openDonationFormBtns = document.querySelectorAll('.open-donation-form');
+      if (openDonationFormBtns.length > 0) {
+        openDonationFormBtns.forEach(button => {
+          button.addEventListener('click', openDonationModal);
+        });
+      }
+      
+      // Close modal when clicking the X
+      closeModalBtn.addEventListener('click', closeDonationModal);
+      
+      // Close modal when clicking outside the modal content
+      window.addEventListener('click', function(event) {
+        if (event.target === donationModal) {
+          closeDonationModal();
+        }
+      });
+      
+      // Handle form submission
+      donationForm.addEventListener('submit', function(e) {
+        // Get the donor name directly from the form
+        const donorName = document.getElementById('donorNameInput').value.trim();
+        
+        // Check for donor name
+        if (!donorName) {
+          alert('A donor name is required to submit a donation.');
+          e.preventDefault();
+          return;
+        }
+        
+        // Fill hidden fields with values the server expects
+        document.getElementById('item').value = document.getElementById('donationTitle').value;
+        document.getElementById('address').value = document.getElementById('donationLocation').value;
+        
+        // Log values for debugging
+        console.log('Submitting donation as:', {
+          donorName: donorName,
+          item: document.getElementById('item').value,
+          address: document.getElementById('address').value
+        });
+        
+        // Add an event listener for the form submission to capture any errors
+        const form = this;
+        const originalAction = form.action;
+        
+        e.preventDefault();
+        
+        // Process image if provided
+        const imageInput = document.getElementById('donationImage');
+        const file = imageInput.files[0];
+        
+        // Function to finalize form submission
+        const submitForm = (imageDataUrl = null) => {
+          // Create FormData object
+          const formData = new FormData(form);
+          
+          // Add the image data if available
+          if (imageDataUrl) {
+            formData.set('image', imageDataUrl);
+          }
+          
+          // Convert FormData to URLSearchParams
+          const params = new URLSearchParams();
+          for (const [key, value] of formData.entries()) {
+            // Skip the file input field but include the image data URL if available
+            if (key !== 'image' || (key === 'image' && typeof value === 'string')) {
+              params.append(key, value);
+            }
+          }
+          
+          // Send the form data using fetch
+          fetch(originalAction, {
+            method: 'POST',
+            body: params,
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          })
+          .then(response => {
+            if (response.redirected) {
+              window.location.href = response.url;
+            } else if (!response.ok) {
+              return response.text().then(text => { throw new Error(text) });
+            } else {
+              closeDonationModal();
+              alert('Thank you for your donation! It has been successfully recorded.');
+            }
+          })
+          .catch(error => {
+            console.error('Error submitting donation:', error);
+            alert('Error submitting donation: ' + error.message);
+          });
+        };
+        
+        // Handle image conversion
+        if (file) {
+          // Check file size (max 5MB)
+          if (file.size > 5 * 1024 * 1024) {
+            alert('Please select an image less than 5MB in size.');
+            return;
+          }
+          
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            const imageDataUrl = event.target.result;
+            console.log("Image converted to data URL:", imageDataUrl.substring(0, 50) + "...");
+            
+            // Make sure the image URL starts with the data: prefix
+            if (imageDataUrl.startsWith('data:image')) {
+              // Create new image to resize if necessary
+              const img = new Image();
+              img.onload = function() {
+                let finalImageData = imageDataUrl;
+                
+                // Only resize if the image is very large
+                if (img.width > 1200 || img.height > 1200) {
+                  console.log("Resizing large image:", img.width, "x", img.height);
+                  
+                  // Create canvas to resize image
+                  const canvas = document.createElement('canvas');
+                  const ctx = canvas.getContext('2d');
+                  
+                  // Calculate new dimensions (max 1200px on longest side)
+                  const maxDimension = 1200;
+                  let newWidth, newHeight;
+                  
+                  if (img.width > img.height) {
+                    newWidth = maxDimension;
+                    newHeight = (img.height / img.width) * maxDimension;
+                  } else {
+                    newHeight = maxDimension;
+                    newWidth = (img.width / img.height) * maxDimension;
+                  }
+                  
+                  // Set canvas dimensions and draw resized image
+                  canvas.width = newWidth;
+                  canvas.height = newHeight;
+                  ctx.drawImage(img, 0, 0, newWidth, newHeight);
+                  
+                  // Get resized image data
+                  finalImageData = canvas.toDataURL('image/jpeg', 0.85);
+                  console.log("Image resized to:", newWidth, "x", newHeight);
+                  console.log("Resized image data:", finalImageData.substring(0, 50) + "...");
+                }
+                
+                // Submit form with processed image
+                submitForm(finalImageData);
+              };
+              
+              img.onerror = function() {
+                console.error("Error loading image for processing");
+                // Still try to submit with original data URL
+                submitForm(imageDataUrl);
+              };
+              
+              img.src = imageDataUrl;
+            } else {
+              console.error("Invalid image data URL format");
+              alert("Error processing image. Please try another image or submit without an image.");
+            }
+          };
+          reader.onerror = function(error) {
+            console.error('Error reading the image file:', error);
+            alert('Error reading the image file. Please try again.');
+          };
+          reader.readAsDataURL(file);
+        } else {
+          // No image provided, submit form without image
+          submitForm();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

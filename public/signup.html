@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodLink - Join Our Mission</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <div class="container">
+    <div class="background">
+      <div class="animated-circle circle1"></div>
+      <div class="animated-circle circle2"></div>
+    </div>
+    <div class="login-box">
+      <h1>Join <span>FoodLink</span></h1>
+      <p class="tagline">Be the change you want to see in the world</p>
+      
+      <form id="signupForm" action="/register" method="post">
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Choose your username" required>
+        </div>
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Create a password" required>
+        </div>
+        <div class="input-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+        </div>
+        <button type="submit" class="btn">Start Your Journey</button>
+        <p class="signup">Already part of our community? <a href="index.html">Welcome back</a></p>
+      </form>
+      
+      <div class="emotional-message">
+        Your generosity can bring hope to those in need. Join us in making a difference.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form values
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      // Basic validation
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+      
+      // Create form data to send
+      const formData = new FormData();
+      formData.append('username', username);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('confirmPassword', confirmPassword);
+      
+      // Show loading state
+      const submitButton = this.querySelector('button[type="submit"]');
+      const originalButtonText = submitButton.textContent;
+      submitButton.textContent = 'Signing up...';
+      submitButton.disabled = true;
+      
+      // Send data to server
+      fetch('/register', {
+        method: 'POST',
+        body: new URLSearchParams(formData),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(response => {
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers.get('content-type'));
+        
+        // Get content-type to handle response appropriately
+        const contentType = response.headers.get('content-type');
+        
+        if (response.ok) {
+          // If response is OK and is JSON, parse it
+          if (contentType && contentType.includes('application/json')) {
+            return response.json().catch(err => {
+              console.error('Error parsing JSON from successful response:', err);
+              throw new Error('Invalid server response format');
+            });
+          }
+          throw new Error('Server response was not JSON');
+        }
+        
+        // If response is not OK, handle different content types
+        if (contentType && contentType.includes('application/json')) {
+          return response.json().then(data => { 
+            throw new Error(data.error || 'Registration failed');
+          });
+        }
+        
+        // For HTML or other non-JSON error responses
+        return response.text().then(text => {
+          console.error('Non-JSON error response:', text.substring(0, 100) + '...');
+          throw new Error('Server error. Please try again later.');
+        });
+      })
+      .then(data => {
+        if (data.success) {
+          // Store user info in localStorage
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('currentUser', data.username);
+          
+          // Show success message
+          alert('Registration successful! Redirecting...');
+          
+          // Redirect to the home page
+          window.location.href = data.redirect || '/page.html';
+        } else {
+          throw new Error(data.error || 'Registration failed');
+        }
+      })
+      .catch(error => {
+        console.error('Registration error:', error);
+        alert(error.message || 'Registration failed. Please try again.');
+      })
+      .finally(() => {
+        // Reset button state
+        submitButton.textContent = originalButtonText;
+        submitButton.disabled = false;
+      });
+    });
+  </script>
+</body>
+</html>

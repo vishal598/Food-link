@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodLink - Share Hope Through Food</title>
+  <link rel="stylesheet" href="main.css">  <!-- Link to the CSS file -->
+</head>
+<body>
+  <div class="container">
+    <!-- Background animation -->
+    <div class="background">
+      <div class="animated-circle circle1"></div>
+      <div class="animated-circle circle2"></div>
+    </div>
+
+    <!-- Login Box -->
+    <div class="login-box">
+      <h1>Welcome to <span>FoodLink</span></h1> <!-- Title with animated text -->
+      <p class="tagline">Together, we can make a difference in someone's life</p>
+      
+      <form id="loginForm" action="/login" method="post">
+        <!-- Email Input -->
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <!-- Password Input -->
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn">Login</button>
+      </form>
+
+      <!-- Signup Link -->
+      <p class="signup">Don't have an account? <a href="signup.html">Join our mission</a></p>
+      
+      <div class="emotional-message">
+        Every meal shared is a life touched. Be part of the change.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form values
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      // Create form data to send
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('password', password);
+      
+      // Show loading state
+      const submitButton = this.querySelector('button[type="submit"]');
+      const originalButtonText = submitButton.textContent;
+      submitButton.textContent = 'Logging in...';
+      submitButton.disabled = true;
+      
+      // Send data to server
+      fetch('/login', {
+        method: 'POST',
+        body: new URLSearchParams(formData),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(response => {
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers.get('content-type'));
+        
+        // Get content-type to handle response appropriately
+        const contentType = response.headers.get('content-type');
+        
+        if (response.ok) {
+          // If response is OK and is JSON, parse it
+          if (contentType && contentType.includes('application/json')) {
+            return response.json().catch(err => {
+              console.error('Error parsing JSON from successful response:', err);
+              throw new Error('Invalid server response format');
+            });
+          }
+          throw new Error('Server response was not JSON');
+        }
+        
+        // If response is not OK, handle different content types
+        if (contentType && contentType.includes('application/json')) {
+          return response.json().then(data => { 
+            throw new Error(data.error || 'Login failed');
+          });
+        }
+        
+        // For HTML or other non-JSON error responses
+        return response.text().then(text => {
+          console.error('Non-JSON error response:', text.substring(0, 100) + '...');
+          throw new Error('Server error. Please try again later.');
+        });
+      })
+      .then(data => {
+        if (data.success) {
+          // Store user info in localStorage
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('currentUser', data.username);
+          
+          // Show success message
+          alert('Login successful! Redirecting...');
+          
+          // Redirect to the home page
+          window.location.href = data.redirect || '/page.html';
+        } else {
+          throw new Error(data.error || 'Login failed');
+        }
+      })
+      .catch(error => {
+        console.error('Login error:', error);
+        alert(error.message || 'Login failed. Please try again.');
+      })
+      .finally(() => {
+        // Reset button state
+        submitButton.textContent = originalButtonText;
+        submitButton.disabled = false;
+      });
+    });
+  </script>
+</body>
+</html>
+

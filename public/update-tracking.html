@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Update Donation Status - FoodLink</title>
+  <link rel="stylesheet" href="/page.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4CAF50;
+      --primary-dark: #388E3C;
+      --accent: #8BC34A;
+      --dark: #111;
+      --darker: #000;
+      --light: #fff;
+      --gray: #aaa;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background: var(--darker);
+      color: var(--light);
+      line-height: 1.6;
+    }
+    
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 5%;
+      background: rgba(17, 17, 17, 0.95);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    nav .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    
+    nav .logo::before {
+      content: "";
+      display: inline-block;
+      height: 30px;
+      width: 30px;
+      background-color: var(--primary);
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+    
+    nav .menu {
+      display: flex;
+      gap: 30px;
+    }
+    
+    nav .menu a {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      position: relative;
+      transition: var(--transition);
+    }
+    
+    nav .menu a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      background: var(--primary);
+      left: 0;
+      bottom: -5px;
+      transition: var(--transition);
+    }
+    
+    nav .menu a:hover {
+      color: var(--primary);
+    }
+    
+    nav .menu a:hover::after {
+      width: 100%;
+    }
+    
+    .update-container {
+      max-width: 700px;
+      margin: 120px auto 50px;
+      padding: 40px;
+      background: var(--dark);
+      border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .update-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .update-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 15px;
+      background: linear-gradient(to right, var(--primary), #6ab04c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+    
+    .update-header h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--primary);
+    }
+    
+    .update-header p {
+      color: var(--gray);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .update-form {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 35px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .update-form:focus-within {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+      border-color: rgba(76, 175, 80, 0.2);
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 500;
+      font-size: 1.05rem;
+      color: var(--light);
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: var(--light);
+      font-size: 1.05rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    
+    .form-helper {
+      display: block;
+      margin-top: 8px;
+      color: var(--primary);
+      font-size: 0.85rem;
+    }
+    
+    .form-group select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+      background-size: 18px;
+    }
+    
+    .current-status {
+      margin-bottom: 25px;
+      padding: 18px 22px;
+      background: rgba(76, 175, 80, 0.1);
+      border-radius: 10px;
+      border-left: 4px solid var(--primary);
+      animation: slideIn 0.5s ease forwards;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .current-status-label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+    
+    .current-status-value {
+      display: flex;
+      align-items: center;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+    
+    .current-status-value i {
+      margin-right: 12px;
+      font-size: 1.3rem;
+    }
+    
+    .update-button {
+      width: 100%;
+      padding: 16px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .update-button:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transition: 0.5s;
+    }
+    
+    .update-button:hover:before {
+      left: 100%;
+    }
+    
+    .update-button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    #trackingResults {
+      display: none;
+    }
+    
+    .status-guide {
+      margin-top: 40px;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .status-guide h3 {
+      margin-bottom: 20px;
+      color: var(--primary);
+      font-size: 1.5rem;
+      position: relative;
+      padding-bottom: 12px;
+    }
+    
+    .status-guide h3:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--primary);
+    }
+    
+    .status-list {
+      list-style-type: none;
+    }
+    
+    .status-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease;
+    }
+    
+    .status-item:hover {
+      transform: translateX(5px);
+    }
+    
+    .status-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    
+    .status-icon {
+      flex-shrink: 0;
+      margin-right: 18px;
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--light);
+      box-shadow: 0 0 0 5px rgba(76, 175, 80, 0.1);
+    }
+    
+    .status-text {
+      flex: 1;
+    }
+    
+    .status-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .status-description {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 20px;
+      display: none;
+    }
+    
+    .loading i {
+      font-size: 2rem;
+      color: var(--primary);
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .error-message {
+      background: rgba(220, 53, 69, 0.1);
+      color: #ff6b6b;
+      padding: 18px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 4px solid #ff6b6b;
+      display: none;
+      animation: shake 0.5s ease forwards;
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+    
+    .success-message {
+      background: rgba(76, 175, 80, 0.1);
+      color: var(--primary);
+      padding: 18px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 4px solid var(--primary);
+      display: none;
+      animation: slideDown 0.5s ease forwards;
+    }
+    
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .update-actions {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    
+    .btn {
+      padding: 12px 25px;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+    
+    .btn i {
+      margin-right: 8px;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: var(--light);
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* User dropdown menu */
+    .user-menu-container {
+      position: relative;
+      display: none;
+    }
+    
+    .user-menu-button {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    
+    .user-menu-button:after {
+      content: '\f107';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      margin-left: 5px;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: var(--dark);
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1001;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    
+    .dropdown-content a {
+      color: var(--light);
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.3s;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .show {
+      display: block;
+    }
+    
+    @media (max-width: 768px) {
+      .update-container {
+        margin: 100px 20px 50px;
+        padding: 30px 20px;
+      }
+      
+      .update-actions {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      nav .menu a {
+        display: none;
+      }
+      
+      nav .menu a.highlight {
+        display: inline-block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="page.html" class="logo">FoodLink</a>
+    <div class="menu">
+      <a href="page.html#about">About</a>
+      <a href="page.html#contacts">Contact</a>
+      <a href="page.html#report">Report</a>
+      <a href="signup.html" id="signupLink">Sign Up</a>
+      <a href="index.html" id="loginLink">Login</a>
+      <div class="user-menu-container" id="userMenuContainer">
+        <span class="user-menu-button" id="userMenuButton" onclick="toggleDropdown()"></span>
+        <div class="dropdown-content" id="userDropdown">
+          <a href="#profile">My Profile</a>
+          <a href="#history">Donation History</a>
+          <a href="#settings">Settings</a>
+          <a href="#" onclick="logout()">Logout</a>
+        </div>
+      </div>
+      <a href="page.html" class="highlight">Donate Now</a>
+    </div>
+  </nav>
+
+  <div class="update-container">
+    <div class="update-header">
+      <h1>Update Donation Status</h1>
+      <p>Use this form to update the status of your donation as it progresses through the delivery process.</p>
+    </div>
+    
+    <div class="error-message" id="errorMessage">
+      <i class="fas fa-exclamation-circle"></i>
+      <span id="errorText">Error message will appear here</span>
+    </div>
+    
+    <div class="success-message" id="successMessage">
+      <i class="fas fa-check-circle"></i>
+      <span id="successText">Success message will appear here</span>
+    </div>
+    
+    <div class="update-form">
+      <div class="form-group">
+        <label for="trackingId">Tracking ID</label>
+        <input type="text" id="trackingId" placeholder="Enter your tracking ID (e.g., FLABCD1234)" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="donorName">Enter the user name</label>
+        <input type="text" id="donorName" placeholder="Enter your name exactly as used when donating" required>
+        <small class="form-helper">For security, this must match your user name.</small>
+      </div>
+      
+      <div class="current-status" id="currentStatus">
+        <div class="current-status-label">Current Status:</div>
+        <div class="current-status-value" id="currentStatusValue">
+          <i class="fas fa-clipboard-check"></i>
+          <span>Order Requested</span>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="statusUpdate">Update Status To:</label>
+        <select id="statusUpdate" required>
+          <option value="">Select new status</option>
+          <option value="Order Requested">Order Requested</option>
+          <option value="Facility Reached">Facility Reached</option>
+          <option value="Picked Up">Picked Up</option>
+          <option value="Received">Received</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="statusNotes">Notes (Optional)</label>
+        <textarea id="statusNotes" rows="3" placeholder="Add any additional information about this status update"></textarea>
+      </div>
+      
+      <button type="button" id="verifyButton" class="update-button">
+        <i class="fas fa-search"></i> Verify Tracking ID
+      </button>
+      
+      <button type="button" id="updateButton" class="update-button" style="display: none;">
+        <i class="fas fa-save"></i> Update Status
+      </button>
+    </div>
+    
+    <div class="loading" id="loading">
+      <i class="fas fa-spinner"></i>
+      <p>Processing...</p>
+    </div>
+    
+    <div class="status-guide">
+      <h3>Status Guide</h3>
+      <ul class="status-list">
+        <li class="status-item">
+          <div class="status-icon"><i class="fas fa-clipboard-check"></i></div>
+          <div class="status-text">
+            <div class="status-title">Order Requested</div>
+            <div class="status-description">Initial status when a donation is first registered in the system.</div>
+          </div>
+        </li>
+        <li class="status-item">
+          <div class="status-icon"><i class="fas fa-building"></i></div>
+          <div class="status-text">
+            <div class="status-title">Facility Reached</div>
+            <div class="status-description">The donation has arrived at our collection or processing facility.</div>
+          </div>
+        </li>
+        <li class="status-item">
+          <div class="status-icon"><i class="fas fa-truck"></i></div>
+          <div class="status-text">
+            <div class="status-title">Picked Up</div>
+            <div class="status-description">The donation is in transit and on its way to the final recipient.</div>
+          </div>
+        </li>
+        <li class="status-item">
+          <div class="status-icon"><i class="fas fa-hand-holding-heart"></i></div>
+          <div class="status-text">
+            <div class="status-title">Received</div>
+            <div class="status-description">The donation has been successfully delivered to the recipient.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="update-actions">
+      <a href="/tracking" class="btn btn-primary"><i class="fas fa-search"></i> Track a Donation</a>
+      <a href="/page.html" class="btn btn-primary"><i class="fas fa-home"></i> Back to Home</a>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Elements
+      const trackingIdInput = document.getElementById('trackingId');
+      const statusUpdateSelect = document.getElementById('statusUpdate');
+      const statusNotesInput = document.getElementById('statusNotes');
+      const verifyButton = document.getElementById('verifyButton');
+      const updateButton = document.getElementById('updateButton');
+      const loading = document.getElementById('loading');
+      const errorMessage = document.getElementById('errorMessage');
+      const errorText = document.getElementById('errorText');
+      const successMessage = document.getElementById('successMessage');
+      const successText = document.getElementById('successText');
+      const currentStatus = document.getElementById('currentStatus');
+      const currentStatusValue = document.getElementById('currentStatusValue');
+      
+      // Define status icons
+      const statusIcons = {
+        'Order Requested': 'fas fa-clipboard-check',
+        'Facility Reached': 'fas fa-building',
+        'Picked Up': 'fas fa-truck',
+        'Received': 'fas fa-hand-holding-heart'
+      };
+      
+      // Check if there's a tracking ID in the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const trackingIdParam = urlParams.get('trackingId');
+      
+      if (trackingIdParam) {
+        trackingIdInput.value = trackingIdParam;
+        // Trigger verification
+        setTimeout(() => {
+          verifyButton.click();
+        }, 500);
+      }
+      
+      // Verify button click handler
+      verifyButton.addEventListener('click', function() {
+        const trackingId = trackingIdInput.value.trim();
+        
+        if (!trackingId) {
+          showError('Please enter a valid tracking ID');
+          return;
+        }
+        
+        // Hide any previous errors and success messages
+        hideMessages();
+        
+        // Show loading
+        loading.style.display = 'block';
+        
+        // Fetch tracking data to verify and get current status
+        fetch(`/api/tracking/${trackingId}`)
+          .then(response => {
+            if (!response.ok) {
+              return response.json().then(data => {
+                throw new Error(data.error || 'Failed to verify tracking ID');
+              });
+            }
+            return response.json();
+          })
+          .then(data => {
+            // Hide loading
+            loading.style.display = 'none';
+            
+            // Get the current status (latest status update)
+            if (data.history && data.history.length > 0) {
+              const latestStatus = data.history[data.history.length - 1].status;
+              
+              // Update current status display
+              currentStatusValue.innerHTML = `
+                <i class="${statusIcons[latestStatus] || 'fas fa-circle'}"></i>
+                <span>${latestStatus}</span>
+              `;
+              currentStatus.style.display = 'block';
+              
+              // Update status dropdown to skip statuses that are already set
+              // and default to the next logical status
+              const allStatuses = ['Order Requested', 'Facility Reached', 'Picked Up', 'Received'];
+              const currentIndex = allStatuses.indexOf(latestStatus);
+              
+              // Clear and rebuild the dropdown
+              statusUpdateSelect.innerHTML = '<option value="">Select new status</option>';
+              
+              // Add all status options after the current status
+              for (let i = 0; i <= allStatuses.length - 1; i++) {
+                const option = document.createElement('option');
+                option.value = allStatuses[i];
+                option.textContent = allStatuses[i];
+                
+                // If this is the current status or an earlier one, disable it
+                if (i <= currentIndex) {
+                  option.disabled = true;
+                  if (i === currentIndex) {
+                    option.textContent += ' (Current)';
+                  } else {
+                    option.textContent += ' (Past)';
+                  }
+                }
+                
+                // If this is the next status after current, select it by default
+                if (i === currentIndex + 1) {
+                  option.selected = true;
+                }
+                
+                statusUpdateSelect.appendChild(option);
+              }
+              
+              // Show the update button, hide the verify button
+              verifyButton.style.display = 'none';
+              updateButton.style.display = 'flex';
+            } else {
+              showError('No status history found for this tracking ID');
+            }
+          })
+          .catch(error => {
+            // Hide loading
+            loading.style.display = 'none';
+            
+            // Show appropriate error message
+            if (error.message.includes("Only the original donor")) {
+              showError("Authorization Error: Only the original donor can update the status of this donation.");
+            } else {
+              showError(error.message);
+            }
+          });
+      });
+      
+      // Update button click handler
+      updateButton.addEventListener('click', function() {
+        const trackingId = trackingIdInput.value.trim();
+        const status = statusUpdateSelect.value;
+        const notes = statusNotesInput.value.trim();
+        const donorName = document.getElementById('donorName').value.trim();
+        
+        if (!trackingId) {
+          showError('Please enter a valid tracking ID');
+          return;
+        }
+        
+        if (!status) {
+          showError('Please select a status update');
+          return;
+        }
+        
+        if (!donorName) {
+          showError('Please enter your name as the donor');
+          return;
+        }
+        
+        // Hide any previous errors and success messages
+        hideMessages();
+        
+        // Show loading
+        loading.style.display = 'block';
+        
+        // Send update to server
+        fetch('/api/tracking/update', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            trackingId,
+            status,
+            notes,
+            donorName
+          })
+        })
+          .then(response => {
+            if (!response.ok) {
+              return response.json().then(data => {
+                throw new Error(data.error || 'Failed to update status');
+              });
+            }
+            return response.json();
+          })
+          .then(data => {
+            // Hide loading
+            loading.style.display = 'none';
+            
+            // Show success message
+            showSuccess('Status updated successfully!');
+            
+            // Update UI to reflect the new status
+            currentStatusValue.innerHTML = `
+              <i class="${statusIcons[status] || 'fas fa-circle'}"></i>
+              <span>${status}</span>
+            `;
+            
+            // Reset the form for another update
+            statusNotesInput.value = '';
+            
+            // If the status is now "Received" (final status)
+            if (status === 'Received') {
+              // Show additional message
+              successText.textContent = 'Status updated successfully! The donation has reached its final status.';
+              
+              // Disable the update button since we're at the final status
+              updateButton.disabled = true;
+              updateButton.style.opacity = '0.7';
+              statusUpdateSelect.disabled = true;
+              statusNotesInput.disabled = true;
+            }
+            
+            // Option to allow another update
+            setTimeout(() => {
+              // Reset to verify mode for another tracking ID
+              if (status !== 'Received') {
+                verifyButton.style.display = 'flex';
+                updateButton.style.display = 'none';
+                currentStatus.style.display = 'none';
+                trackingIdInput.value = '';
+                statusUpdateSelect.innerHTML = '<option value="">Select new status</option>';
+                statusUpdateSelect.appendChild(new Option('Order Requested', 'Order Requested'));
+                statusUpdateSelect.appendChild(new Option('Facility Reached', 'Facility Reached'));
+                statusUpdateSelect.appendChild(new Option('Picked Up', 'Picked Up'));
+                statusUpdateSelect.appendChild(new Option('Received', 'Received'));
+                hideMessages();
+              }
+            }, 5000);
+          })
+          .catch(error => {
+            // Hide loading
+            loading.style.display = 'none';
+            
+            // Show error
+            showError(error.message);
+          });
+      });
+      
+      // Helper functions
+      function showError(message) {
+        errorText.textContent = message;
+        errorMessage.style.display = 'block';
+        successMessage.style.display = 'none';
+      }
+      
+      function showSuccess(message) {
+        successText.textContent = message;
+        successMessage.style.display = 'block';
+        errorMessage.style.display = 'none';
+      }
+      
+      function hideMessages() {
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
+      }
+      
+      // User authentication functionality
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      const currentUser = localStorage.getItem('currentUser');
+      
+      // Update navigation based on login status
+      updateNavigation(isLoggedIn, currentUser);
+      
+      // Function to update navigation
+      function updateNavigation(isLoggedIn, username) {
+        const loginLink = document.getElementById('loginLink');
+        const signupLink = document.getElementById('signupLink');
+        const userMenuContainer = document.getElementById('userMenuContainer');
+        const userMenuButton = document.getElementById('userMenuButton');
+        
+        if (isLoggedIn && username) {
+          // Hide login/signup links
+          loginLink.style.display = 'none';
+          signupLink.style.display = 'none';
+          
+          // Show user menu
+          userMenuContainer.style.display = 'block';
+          userMenuButton.textContent = username;
+        } else {
+          // Show login/signup links
+          loginLink.style.display = 'inline-block';
+          signupLink.style.display = 'inline-block';
+          
+          // Hide user menu
+          userMenuContainer.style.display = 'none';
+        }
+      }
+      
+      // Function to handle logout
+      window.logout = function() {
+        // Clear login status
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('currentUser');
+        
+        // Update navigation
+        updateNavigation(false, null);
+        
+        // Close dropdown
+        document.getElementById('userDropdown').classList.remove('show');
+        
+        // Redirect to logout endpoint
+        window.location.href = '/logout';
+      };
+      
+      // Function to toggle dropdown
+      window.toggleDropdown = function() {
+        document.getElementById('userDropdown').classList.toggle('show');
+      };
+      
+      // Close dropdown when clicking outside
+      window.onclick = function(event) {
+        if (!event.target.matches('#userMenuButton')) {
+          const dropdowns = document.getElementsByClassName('dropdown-content');
+          for (let i = 0; i < dropdowns.length; i++) {
+            const openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+              openDropdown.classList.remove('show');
+            }
+          }
+        }
+      };
+    });
+  </script>
+</body>
+</html> 
